@@ -4,14 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 
 import { KitchenDocketComponent } from './components/kitchen-docket/kitchen-docket.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
@@ -19,14 +20,17 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
   declarations: [
     AppComponent,
     KitchenDocketComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule, // for firestore
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

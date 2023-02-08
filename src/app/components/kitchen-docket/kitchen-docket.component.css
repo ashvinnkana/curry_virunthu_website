@@ -1,0 +1,107 @@
+.container {
+    width: 100vw;
+    height: 91vh;
+    position: absolute;
+    background-color: white;
+    overflow-x: auto;
+    overflow-y: hidden;
+} 
+
+.margin {
+    width: 1000vw; 
+    height: 85vh;
+    position: relative;
+    margin: 3vh 2vw;
+    margin-top: 0;
+    padding-top: 3vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.side-fade-box {
+    position: fixed;
+    right: 0;
+    top: 9vh;
+    height: 91vh;
+    width: 10vw;
+    background-image: linear-gradient(to right, 
+        rgba(255, 255, 255, 0), 
+        rgb(253, 253, 253)
+    100%);
+    z-index: 100;
+}
+
+.bottom-fade-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 15vh;
+    width: 100vw;
+    background-image: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0), 
+        rgb(255, 255, 255)
+    100%);
+    z-index: 100;
+}
+
+.docket-container {
+    background-color: rgb(231, 231, 231);
+    width: 25vw;
+    min-height: 20vh;
+    max-height: 88vh;
+    float: left;
+    margin-left: 1vw;
+    border-radius: 1vw;
+    position: relative;
+    box-shadow: 0 0.2vw 0.4vw 0 rgba(0, 0, 0, 0.3);
+}
+
+.table-num {
+    width: 2vw;
+    height: 2vw;
+    text-align: center;
+    border-radius: 50%;
+    background-color: grey;
+    border: solid 0.2vw white;
+    font-size: 1.5vw;
+    color: white;
+    padding: 0.5vw;
+    position: absolute;
+    right: -0.5vw;
+    top: -2vh;
+}
+
+.order-type {
+    font-family: Calibri;
+    color: white;
+    background-color: grey;
+    padding: 0.5vh 1vw;
+    border-radius: 1vw 1vw 0 0;
+    font-size: 1vw;
+}
+
+.item-content {
+    margin: 2vh 1.5vw;
+}
+
+.item-heading {
+    font-size: 1vw;
+    border-top: solid 0.1vw lightgray;
+    border-bottom: solid 0.1vw lightgray;
+    padding: 1vh 1vw;
+}
+
+.item {
+    background-color: white;
+    margin-bottom: 0.5vh;
+    padding: 0.5vw 1vh;
+    border: solid white 0.1vw;
+    cursor: pointer;
+    position: relative;
+}
+
+.item-quantity {
+    position: absolute;
+    right: 1vw;
+    top: 1vh;
+}

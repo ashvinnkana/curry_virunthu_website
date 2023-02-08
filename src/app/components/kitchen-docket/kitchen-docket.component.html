@@ -1,1 +1,83 @@
-<p>kitchen-docket works!</p>
+<div class="container">
+    <div class="margin">
+        <!--Side fade box-->
+        <div class="side-fade-box"></div>
+        <!--Bottom fade box-->
+        <div class="bottom-fade-box"></div>
+        
+        <div *ngFor="let order of orders; index as j;" class="docket-container">
+            
+            <!--Loose Containers-->
+            <div class="table-num" 
+            [style.backgroundColor]=getOrderColor(order.orderType)
+            *ngIf="order.orderType=='Dine-in'">
+            {{order?.tableNum}}</div>
+            
+            <!--Relative Containers-->
+            <div class="order-type"
+            [style.backgroundColor]=getOrderColor(order.orderType)
+            >{{order.orderType}}</div>
+            
+            <br>
+            <!--FOOD-->
+            <div class="item-heading"
+            [style.color]=getOrderColor(order.orderType)
+            *ngIf="order.foodORder.length!=0">
+                <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
+                <span style="margin-left: 0.7vw;">Food</span>                
+            </div>
+            <div class="item-content"
+            *ngIf="order.foodORder.length!=0">
+                <div class="item"
+                *ngFor="let food of order.foodORder; index as i;"
+                (click)="handleItemClick(j, i, 'foodORder')"
+                (mousedown)="handleItemHold(j, i, 'foodORder')"
+                [(style.backgroundColor)]="orderStateColor[food.state]">
+                    <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
+                    <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>
+
+                    <div class="item-quantity">
+                        <a 
+                        style="font-family: 'calibri'; font-size: 1vw;"
+                        *ngIf="food.state!='PREPARING'">
+                            x {{food.quantity}}</a>
+                        <a 
+                        style="font-family: 'calibri'; font-size: 1vw;"
+                        *ngIf="food.state=='PREPARING'">
+                        {{food.completedCount}} / {{food.quantity}}</a>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!--BEVERAGE-->
+            <div class="item-heading"
+            [style.color]=getOrderColor(order.orderType)
+            *ngIf="order.drinkOrder.length!=0">
+                <i class="fas fa-coffee"></i>
+                <span style="margin-left: 0.5vw;">Beverage</span>             
+            </div>
+            <div class="item-content"
+            *ngIf="order.drinkOrder.length!=0">
+                <div class="item"
+                *ngFor="let drink of order.drinkOrder; index as i;"
+                (click)="handleItemClick(j, i, 'drinkOrder')"
+                [(style.backgroundColor)]="orderStateColor[drink.state]">
+                <a style="color: black; font-size: 1vw;">{{drink.label}}</a>
+
+                <div class="item-quantity">
+                    <a 
+                    style="font-family: 'calibri'; font-size: 1vw;"
+                    *ngIf="drink.state!='PREPARING'">
+                        x {{drink.quantity}}</a>
+                    <a 
+                    style="font-family: 'calibri'; font-size: 1vw;"
+                    *ngIf="drink.state=='PREPARING'">
+                    {{drink.completedCount}} / {{drink.quantity}}</a>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
