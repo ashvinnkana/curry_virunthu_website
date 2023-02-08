@@ -5,7 +5,7 @@
         <!--Bottom fade box-->
         <div class="bottom-fade-box"></div>
         
-        <div *ngFor="let order of orders; index as j;" class="docket-container">
+        <div *ngFor="let order of orders; index as j;" class="docket-container prevent-select">
             
             <!--Loose Containers-->
             <div class="table-num" 
@@ -31,7 +31,6 @@
                 <div class="item"
                 *ngFor="let food of order.foodORder; index as i;"
                 (click)="handleItemClick(j, i, 'foodORder')"
-                (mousedown)="handleItemHold(j, i, 'foodORder')"
                 [(style.backgroundColor)]="orderStateColor[food.state]">
                     <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
                     <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>

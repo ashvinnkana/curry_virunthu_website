@@ -62,14 +62,4 @@ export class KitchenDocketComponent {
         break;
     }
   }
-
-  public timeoutHandler: any;
-
-  handleItemHold(orderIndex:any, itemIndex: any, itemType: any) {
-    this.timeoutHandler = setTimeout(() => {
-      this.orders[orderIndex][itemType][itemIndex]["state"] = "ORDERED"
-      this.timeoutHandler = null;
-    }, 1000);
-    
-  }
 }
