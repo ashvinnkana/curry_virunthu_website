@@ -12,6 +12,8 @@ export class KitchenDocketComponent {
 
   public orders: any = [];
 
+  public swiping = false;
+
   public orderTypeColor:any = {
     "Dine-in": "#0B5FA3",
     "Takeaway": "#a30b69"
@@ -30,7 +32,8 @@ export class KitchenDocketComponent {
   }
 
   retrieveOrders(): void {
-    this.orderService.getAll().snapshotChanges().pipe(
+    this.orderService.getAll()
+    .snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
           ({ id: c.payload.doc.id, ...c.payload.doc.data() })
@@ -61,5 +64,15 @@ export class KitchenDocketComponent {
         }
         break;
     }
+  }
+
+  handleResetItem(orderIndex:any, itemIndex: any, itemType: any) {
+    this.orders[orderIndex][itemType][itemIndex]["state"] = "ORDERED";
+    this.orders[orderIndex][itemType][itemIndex]["completedCount"] = 0;
+  }
+
+  handleCompleteItem(orderIndex:any, itemIndex: any, itemType: any) {
+    this.orders[orderIndex][itemType][itemIndex]["state"] = "DONE";
+    this.orders[orderIndex][itemType][itemIndex]["completedCount"] = this.orders[orderIndex][itemType][itemIndex]["quantity"];
   }
 }

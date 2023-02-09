@@ -10,7 +10,7 @@ export class OrderService {
   orderRef: AngularFirestoreCollection<any>;
 
   constructor(private db: AngularFirestore) {
-    this.orderRef = db.collection(this.dbPath);
+    this.orderRef = db.collection(this.dbPath, ref => ref.orderBy('orderTime'));
   }
 
   getAll(): AngularFirestoreCollection<any> {
