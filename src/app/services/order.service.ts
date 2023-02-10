@@ -14,7 +14,7 @@ export class OrderService {
   }
 
   getAll(): AngularFirestoreCollection<any> {
-    return this.orderRef;
+    return this.orderRef; 
   }
 
   update(id: string, data: any): Promise<void> {

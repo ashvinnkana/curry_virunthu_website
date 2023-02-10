@@ -2,108 +2,97 @@
     <div class="margin">
         <!--Side fade box-->
         <div class="side-fade-box"></div>
-        <!--Bottom fade box-->
-        <div class="bottom-fade-box"></div>
-        
-        <div *ngFor="let order of orders; index as j;" class="docket-container prevent-select">
-            
-            <!--Loose Containers-->
-            <div class="table-num" 
-            [style.backgroundColor]=getOrderColor(order.orderType)
-            *ngIf="order.orderType=='Dine-in'">
-            {{order?.tableNum}}</div>
-            
-            <!--Relative Containers-->
-            <div class="order-type"
-            [style.backgroundColor]=getOrderColor(order.orderType)
-            >{{order.orderType}}</div>
-            
-            <br>
-            <div style="position: relative;height: 5.5vh;">
-                <a class="docket-timer"
-                [style.color]=getOrderColor(order.orderType)
-                >{{findTimer(order.orderTime)}}</a>
-                <a class="complete-rate"
-                *ngIf="order.state == 'PREPARING'"
-                >{{roundPercent(order.completedPercent)}}%</a>
-            </div>
-            
-            <div class="progress-container"
-            *ngIf="order.state == 'PREPARING'">
-                <div class="progress-runner"
-                [style.width.%]="order.completedPercent"></div>
-            </div>
+        <!--Bottom fade box
+        <div class="bottom-fade-box"></div>-->
 
-            <br>
+        <div *ngFor="let order of orders; index as j;">
 
-            <div class="scrollable-content">
-                <!--FOOD-->
-                <div class="item-heading"
-                [style.color]=getOrderColor(order.orderType)
-                *ngIf="order.foodOrder.length!=0">
-                    <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
-                    <span style="margin-left: 0.7vw;">Food</span>                
+            <div *ngIf="order.state=='ORDERED' || order.state=='PREPARING' " class="docket-container prevent-select">
+
+                <!--Loose Containers-->
+                <div class="table-num" [style.backgroundColor]=getOrderColor(order.orderType)
+                    *ngIf="order.orderType=='Dine-in'">
+                    {{order?.tableNum}}</div>
+
+                <!--Relative Containers-->
+                <div class="order-type" [style.backgroundColor]=getOrderColor(order.orderType)>{{order.orderType}}</div>
+
+                <br>
+                <div style="position: relative;height: 5.5vh;">
+                    <a class="docket-timer"
+                        [style.color]=getOrderColor(order.orderType)>{{findTimer(order.orderTime)}}</a>
+                    <a class="complete-rate"
+                        *ngIf="order.state == 'PREPARING'">{{roundPercent(order.completedPercent)}}%</a>
                 </div>
-                <div class="item-content"
-                *ngIf="order.foodOrder.length!=0">
-                    <div class="item"
-                    *ngFor="let food of order.foodOrder; index as i;"
-                    (swipeleft)="handleResetItem(j, i, 'foodOrder'); swiping=true"
-                    (swiperight)="handleCompleteItem(j, i, 'foodOrder'); swiping=true"
-                    (click)="swiping ?( swiping = false ) : handleItemClick(j, i, 'foodOrder')"
-                    [(style.backgroundColor)]="orderStateColor[food.state]">
-                        <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
-                        <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>
 
-                        <div class="item-quantity">
-                            <a 
-                            style="font-family: 'calibri'; font-size: 1vw;"
-                            *ngIf="food.state!='PREPARING'">
-                                x {{food.quantity}}</a>
-                            <a 
-                            style="font-family: 'calibri'; font-size: 1vw;"
-                            *ngIf="food.state=='PREPARING'">
-                            {{food.completedCount}} / {{food.quantity}}</a>
-                            
+                <div class="progress-container" *ngIf="order.state == 'PREPARING'">
+                    <div class="progress-runner" [style.width.%]="order.completedPercent"></div>
+                </div>
+
+                <div style="position: relative; margin-top: 1vh; height: 2vh;" *ngIf="order.completedPercent == 100">
+                    <button class="complete-btn"
+                        (click)="sendToBiling(j)"
+                    >Complete Docket</button>
+                </div>
+                
+
+                <br>
+
+                <div class="scrollable-content">
+                    <!--FOOD-->
+                    <div class="item-heading" [style.color]=getOrderColor(order.orderType)
+                        *ngIf="order.foodOrder.length!=0">
+                        <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
+                        <span style="margin-left: 0.7vw;">Food</span>
+                    </div>
+                    <div class="item-content" *ngIf="order.foodOrder.length!=0">
+                        <div class="item" *ngFor="let food of order.foodOrder; index as i;"
+                            (swipeleft)="handleResetItem(j, i, 'foodOrder'); swiping=true"
+                            (swiperight)="handleCompleteItem(j, i, 'foodOrder'); swiping=true"
+                            (click)="swiping ?( swiping = false ) : handleItemClick(j, i, 'foodOrder')"
+                            [(style.backgroundColor)]="orderStateColor[food.state]">
+                            <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
+                            <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>
+
+                            <div class="item-quantity">
+                                <a style="font-family: 'calibri'; font-size: 1vw;" *ngIf="food.state!='PREPARING'">
+                                    x {{food.quantity}}</a>
+                                <a style="font-family: 'calibri'; font-size: 1vw;" *ngIf="food.state=='PREPARING'">
+                                    {{food.completedCount}} / {{food.quantity}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--BEVERAGE-->
+                    <div class="item-heading" [style.color]=getOrderColor(order.orderType)
+                        *ngIf="order.drinkOrder.length!=0">
+                        <i class="fas fa-coffee"></i>
+                        <span style="margin-left: 0.5vw;">Beverage</span>
+                    </div>
+                    <div class="item-content" *ngIf="order.drinkOrder.length!=0">
+                        <div class="item" *ngFor="let drink of order.drinkOrder; index as i;"
+                            (swipeleft)="handleResetItem(j, i, 'drinkOrder'); swiping=true"
+                            (swiperight)="handleCompleteItem(j, i, 'drinkOrder'); swiping=true"
+                            (click)="swiping ?( swiping = false ) : handleItemClick(j, i, 'drinkOrder')"
+                            [(style.backgroundColor)]="orderStateColor[drink.state]">
+                            <a style="color: black; font-size: 1vw;">{{drink.label}}</a>
+
+                            <div class="item-quantity">
+                                <a style="font-family: 'calibri'; font-size: 1vw;" *ngIf="drink.state!='PREPARING'">
+                                    x {{drink.quantity}}</a>
+                                <a style="font-family: 'calibri'; font-size: 1vw;" *ngIf="drink.state=='PREPARING'">
+                                    {{drink.completedCount}} / {{drink.quantity}}</a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!--BEVERAGE-->
-                <div class="item-heading"
-                [style.color]=getOrderColor(order.orderType)
-                *ngIf="order.drinkOrder.length!=0">
-                    <i class="fas fa-coffee"></i>
-                    <span style="margin-left: 0.5vw;">Beverage</span>             
-                </div>
-                <div class="item-content"
-                *ngIf="order.drinkOrder.length!=0">
-                    <div class="item"
-                    *ngFor="let drink of order.drinkOrder; index as i;"
-                    (swipeleft)="handleResetItem(j, i, 'drinkOrder'); swiping=true"
-                    (swiperight)="handleCompleteItem(j, i, 'drinkOrder'); swiping=true"
-                    (click)="swiping ?( swiping = false ) : handleItemClick(j, i, 'drinkOrder')"
-                    [(style.backgroundColor)]="orderStateColor[drink.state]">
-                    <a style="color: black; font-size: 1vw;">{{drink.label}}</a>
-
-                    <div class="item-quantity">
-                        <a 
-                        style="font-family: 'calibri'; font-size: 1vw;"
-                        *ngIf="drink.state!='PREPARING'">
-                            x {{drink.quantity}}</a>
-                        <a 
-                        style="font-family: 'calibri'; font-size: 1vw;"
-                        *ngIf="drink.state=='PREPARING'">
-                        {{drink.completedCount}} / {{drink.quantity}}</a>
-                        
-                    </div>
-                    </div>
-                </div>
                 <div class="customer-content">
-                    {{getCustomerName(order.customer)}}
+                    Order for {{order.customer}}
                 </div>
-                <br><br>
             </div>
+
         </div>
     </div>
-</div> 
+</div>
