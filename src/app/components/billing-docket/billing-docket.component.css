@@ -5,7 +5,6 @@
     background-color: white;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom: 10vh;
 } 
 
 .margin {
@@ -16,8 +15,7 @@
     margin-top: 0;
     padding-top: 3vh;
     overflow-x: auto;
-    overflow-y: auto;
-    
+    overflow-y: hidden;
 }
 
 .side-fade-box {
@@ -49,11 +47,14 @@
 .docket-container {
     background-color: rgb(231, 231, 231);
     width: 25vw;
+    min-height: 20vh;
+    max-height: 88vh;
     float: left;
     margin-left: 1vw;
     border-radius: 1vw;
     position: relative;
     box-shadow: 0 0.2vw 0.4vw 0 rgba(0, 0, 0, 0.3);
+    
 }
 
 .table-num {
@@ -130,6 +131,12 @@
     height: 2vh;
     border-radius: 0.2vw;
     position: absolute;
+}
+
+.scrollable-content {
+    max-height: 61vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .complete-rate {

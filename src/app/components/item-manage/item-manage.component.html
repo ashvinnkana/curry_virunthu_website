@@ -1,0 +1,19 @@
+<div style="height: 81vh; overflow-y: auto;">
+    <Table id="items">
+        <tr *ngFor="let item of items; index as j;">
+            <td>{{item.label}}</td>
+            <td *ngIf="item.isAvailable" (click)="changeAvailability(j)"><button class="available">AVAILABLE</button></td>
+            <td *ngIf="!item.isAvailable" (click)="changeAvailability(j)"><button class="soldout">SOLD OUT</button></td>
+            <td>
+                <table>
+                    <tr *ngFor="let choice of item.choices; index as i;">
+                        <td>{{choice.label}}</td>
+                        <td *ngIf="choice.isAvailable" (click)="changeChoiceAvailability(j,i)"><button class="available">AVAILABLE</button></td>
+                        <td *ngIf="!choice.isAvailable" (click)="changeChoiceAvailability(j,i)"><button class="soldout">SOLD OUT</button></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </Table>
+</div>

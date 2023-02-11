@@ -5,13 +5,11 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: 'app-kitchen-docket',
-  templateUrl: './kitchen-docket.component.html',
-  styleUrls: ['./kitchen-docket.component.css']
+  selector: 'app-billing-docket',
+  templateUrl: './billing-docket.component.html',
+  styleUrls: ['./billing-docket.component.css']
 })
-
-export class KitchenDocketComponent {
-
+export class BillingDocketComponent {
   public orders: any = [];
 
   public swiping = false;
@@ -40,6 +38,15 @@ export class KitchenDocketComponent {
     setInterval(() => {
       this.currentTime = Date.now()
     }, 1000)
+
+    setInterval(() => {
+      console.log(this.updateDocketList)
+      for (var docket of this.updateDocketList) {
+        this.updateOrder(docket["id"], docket["data"])
+      }
+
+      this.updateDocketList = []
+    }, 600000)
 
   }
 
@@ -80,7 +87,10 @@ export class KitchenDocketComponent {
         break;
     }
 
-    this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
+    this.updateDocketList.push({
+      "id" : this.orders[orderIndex]["id"],
+      "data" : this.orders[orderIndex]
+    })
   }
 
   updateCompletedPercent(orderIndex: any) {
@@ -106,7 +116,10 @@ export class KitchenDocketComponent {
 
     }
 
-    this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
+    this.updateDocketList.push({
+      "id" : this.orders[orderIndex]["id"],
+      "data" : this.orders[orderIndex]
+    })
   }
 
   handleCompleteItem(orderIndex: any, itemIndex: any, itemType: any) {
@@ -122,7 +135,10 @@ export class KitchenDocketComponent {
       this.updateCompletedPercent(orderIndex);
     }
 
-    this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
+    this.updateDocketList.push({
+      "id" : this.orders[orderIndex]["id"],
+      "data" : this.orders[orderIndex]
+    })
   }
 
   sendToBiling(orderIndex: any) {
@@ -140,17 +156,14 @@ export class KitchenDocketComponent {
     var minutes = Math.floor((totalSec - (hours * 3600)) / 60);
     var seconds = Math.floor(totalSec - (hours * 3600) - (minutes * 60));
 
-    if (hours == -1)
-      return ""
-
     var timer = ""
     if (hours != 0)
-      timer += hours + "hr "
+      timer += hours + "h "
 
-    if (minutes < 1 && hours == 0)
+    if (minutes < 5 && hours == 0)
       return ""
     else
-      timer += minutes + "min "
+      timer += minutes + "m "
 
     return timer
   }
@@ -166,5 +179,12 @@ export class KitchenDocketComponent {
     .catch((error) => {
       console.error("Cannot update order docket: ", error);
   });
+  }
+
+  confirmPayment(orderIndex: any) {
+    if (confirm("PAID ?")) {
+      this.orders[orderIndex]["state"] = 'PAID'
+      this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
+    }
   }
 }

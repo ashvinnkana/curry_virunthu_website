@@ -16,6 +16,8 @@ import {HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular
 import { KitchenDocketComponent } from './components/kitchen-docket/kitchen-docket.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HeaderComponent } from './components/header/header.component';
+import { BillingDocketComponent } from './components/billing-docket/billing-docket.component';
+import { ItemManageComponent } from './components/item-manage/item-manage.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -30,7 +32,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppComponent,
     KitchenDocketComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    BillingDocketComponent,
+    ItemManageComponent
   ],
   imports: [
     BrowserModule,

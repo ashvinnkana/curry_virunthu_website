@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="margin">
+        <!--Side fade box-->
+        <div class="side-fade-box"></div>
+        <!--Bottom fade box
+        <div class="bottom-fade-box"></div>-->
+
+        <div *ngFor="let order of orders; index as j;">
+
+            <div *ngIf="order.state=='BILLING'" class="docket-container prevent-select"
+            (click)="confirmPayment(j)">
+
+                <!--Loose Containers-->
+                <div class="table-num" [style.backgroundColor]=getOrderColor(order.orderType)
+                    *ngIf="order.orderType=='Dine-in'">
+                    {{order?.tableNum}}</div>
+
+                <!--Relative Containers-->
+                <div class="order-type" [style.backgroundColor]=getOrderColor(order.orderType)>{{order.orderType}}</div>
+
+                
+                <div style="font-size: 3vw; text-align: center;margin-top: 2vh;" [style.color]=getOrderColor(order.orderType)>
+                    ${{order.total}}</div>
+                    <div style="font-size: 1vw; text-align: center;" [style.color]=getOrderColor(order.orderType)>
+                        TOTAL</div>
+
+
+
+                <br>
+
+                <div class="scrollable-content">
+                    <!--FOOD-->
+                    <div class="item-heading" [style.color]=getOrderColor(order.orderType)
+                        *ngIf="order.foodOrder.length!=0">
+                        <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
+                        <span style="margin-left: 0.7vw;">Food</span>
+                    </div>
+                    <div class="item-content" *ngIf="order.foodOrder.length!=0">
+                        <div class="item" *ngFor="let food of order.foodOrder; index as i;">
+                            <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
+                            <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>
+
+                            <div class="item-quantity">
+                                <a style="font-family: 'calibri'; font-size: 1vw;">
+                                    <a style="color: red;">${{food.unitPrice}}</a> x {{food.quantity}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--BEVERAGE-->
+                    <div class="item-heading" [style.color]=getOrderColor(order.orderType)
+                        *ngIf="order.drinkOrder.length!=0">
+                        <i class="fas fa-coffee"></i>
+                        <span style="margin-left: 0.5vw;">Beverage</span>
+                    </div>
+                    <div class="item-content" *ngIf="order.drinkOrder.length!=0">
+                        <div class="item" *ngFor="let drink of order.drinkOrder; index as i;">
+                            <a style="color: black; font-size: 1vw;">{{drink.label}}</a>
+
+                            <div class="item-quantity">
+                                <a style="font-family: 'calibri'; font-size: 1vw;">
+                                    <a style="color: red;">${{drink.unitPrice}}</a> x {{drink.quantity}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-content">
+                    Order for {{order.customer}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
