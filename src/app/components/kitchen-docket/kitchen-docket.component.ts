@@ -13,6 +13,9 @@ import { OrderService } from 'src/app/services/order.service';
 export class KitchenDocketComponent {
 
   public orders: any = [];
+  public foodSummary: any = {};
+  public addonSummary: any = {};
+  public drinkSummary: any = {};
 
   public swiping = false;
 
@@ -53,7 +56,60 @@ export class KitchenDocketComponent {
         )
       ).subscribe(data => {
         this.orders = data;
+        this.foodSummary = {}
+        this.drinkSummary = {}
+        this.addonSummary = {}
+        for (let order of this.orders) {
+          if (order["state"] == "ORDERED" || order["state"] == "PREPARING") {
+            for (let food of order["foodOrder"]) {
+              if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
+                if (this.foodSummary[food["label"]]) {
+                  this.foodSummary[food["label"]] += food["quantity"] - food["completedCount"]
+                } else {
+                  this.foodSummary[food["label"]] = food["quantity"] - food["completedCount"]
+                }
+
+                if (food["addon"]) {
+                  if (this.addonSummary[food["addon"]]) {
+                    this.addonSummary[food["addon"]] += 1
+                  } else {
+                    this.addonSummary[food["addon"]] = 1
+                  }
+                }
+              }
+            }
+            for (let drink of order["drinkOrder"]) {
+              if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
+                if (this.drinkSummary[drink["label"]]) {
+                  this.drinkSummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
+                } else {
+                  this.drinkSummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
+                }
+              }
+            }
+          }
+        }
+
+        if(Object.keys(this.foodSummary).length == 0) {
+          this.foodSummary = null
+        }
+        if(Object.keys(this.drinkSummary).length == 0) {
+          this.drinkSummary = null
+        }
+        if(Object.keys(this.addonSummary).length == 0) {
+          this.addonSummary = null
+        }
+
       });
+  }
+
+  summaryWidth = 5
+  showSummary() {
+    if (this.summaryWidth == 5) {
+      this.summaryWidth = 30
+    } else {
+      this.summaryWidth = 5
+    }
   }
 
   getOrderColor(type: any): any {
@@ -159,12 +215,12 @@ export class KitchenDocketComponent {
     return Math.round(value)
   }
 
-  updateOrder(id:any, data:any) {
+  updateOrder(id: any, data: any) {
     this.orderService.update(id, data).then(() => {
 
     })
-    .catch((error) => {
-      console.error("Cannot update order docket: ", error);
-  });
+      .catch((error) => {
+        console.error("Cannot update order docket: ", error);
+      });
   }
 }

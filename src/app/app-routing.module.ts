@@ -7,10 +7,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ItemManageComponent } from './components/item-manage/item-manage.component';
 
 const routes: Routes = [
-  { path: '',   redirectTo: 'kitchen-docket', pathMatch: 'full' },
-  { path: 'kitchen-docket', component: KitchenDocketComponent },
-  { path: 'billing-docket', component: BillingDocketComponent },
-  { path: 'item-manage', component: ItemManageComponent },
+  { path: '',   redirectTo: 'admin/kitchen-docket', pathMatch: 'full' },
+  { path: 'admin/kitchen-docket', component: KitchenDocketComponent },
+  { path: 'admin/billing-docket', component: BillingDocketComponent },
+  { path: 'admin/item-manage', component: ItemManageComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

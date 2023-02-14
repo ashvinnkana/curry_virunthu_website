@@ -3,7 +3,7 @@
         <!--Side fade box-->
         <div class="side-fade-box"></div>
         <!--Bottom fade box
-        <div class="bottom-fade-box"></div>-->  
+        <div class="bottom-fade-box"></div>-->
 
         <div *ngFor="let order of orders; index as j;">
 
@@ -30,11 +30,9 @@
                 </div>
 
                 <div style="position: relative; margin-top: 1vh; height: 2vh;" *ngIf="order.completedPercent == 100">
-                    <button class="complete-btn"
-                        (click)="sendToBiling(j)"
-                    >Complete Docket</button>
+                    <button class="complete-btn" (click)="sendToBiling(j)">Complete Docket</button>
                 </div>
-                
+
 
                 <br>
 
@@ -95,4 +93,59 @@
 
         </div>
     </div>
+
+    <div class="side-helper" [style.width.vw]="summaryWidth">
+        <div class="helper-heading">S U M M A R Y</div>
+        <div class="minimizer"
+        (click)="showSummary()">
+            <i class="fas fa-chevron-left" style="margin-top: 1.8vw;"></i>
+        </div>
+        <br>
+        <div style="overflow-y: auto; height: 80vh;" 
+        *ngIf="foodSummary != null || drinkSummary != null || addonSummary != null">
+            <div class="item-heading"  *ngIf="foodSummary != null">
+                <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
+                <span style="margin-left: 0.7vw;">Food</span>
+            </div>
+            <br>
+            <div class="item SummaryItem" *ngFor="let item of foodSummary | keyvalue">
+                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+                <div class="item-quantity">
+                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
+                        x {{item.value}}</a>
+                </div>
+            </div><br>
+            <div class="item-heading" *ngIf="addonSummary != null">
+                <i class="fas fa-puzzle-piece"></i>
+                <span style="margin-left: 0.7vw;">Addons</span>
+            </div>
+            <br>
+            <div class="item SummaryItem" *ngFor="let item of addonSummary | keyvalue">
+                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+                <div class="item-quantity">
+                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
+                        x {{item.value}}</a>
+                </div>
+            </div><br>
+            <div class="item-heading" *ngIf="drinkSummary != null">
+                <i class="fas fa-coffee"></i>
+                <span style="margin-left: 0.5vw;">Beverage</span>
+            </div>
+            <br>
+            <div class="item SummaryItem" *ngFor="let item of drinkSummary | keyvalue">
+                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+                <div class="item-quantity">
+                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold;">
+                        x {{item.value}}</a>
+                </div>
+            </div>
+        </div>
+        
+
+        <div style="color: white;"
+        *ngIf="foodSummary == null || drinkSummary == null || addonSummary == null">
+        <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   P E N D I N G   D O C K E T S</p></pre>
+        
+    </div>
+    <div class="bottom-fade"></div>
 </div>
