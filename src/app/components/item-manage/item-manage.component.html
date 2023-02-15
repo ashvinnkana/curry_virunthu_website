@@ -1,5 +1,15 @@
-<div style="height: 81vh; overflow-y: auto; padding: 3vh 4vw">
+<div style="position: relative;">
+<br>
+<div style="height: 4vh; padding: 0 4vw">
+    <button class="addItem">Add Item</button>
+</div><br>
+<div style="height: 75vh; overflow-y: auto; padding: 0 4vw; padding-bottom: 3vh; padding-top: 1vh;">
     <div class="item" *ngFor="let item of items; index as j;">
         {{item.label}}
     </div>
 </div>
+
+<div class="modal-container">
+    <app-item-crud [data]="choosen_item_data" crud="update"></app-item-crud>
+</div>
+</div> 

@@ -20,9 +20,9 @@ ul {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 2vh 1.5vw;
     text-decoration: none;
-    font-size: 1vw;
+    font-size: 0.8vw;
   }
   
   li a:hover:not(.active) {

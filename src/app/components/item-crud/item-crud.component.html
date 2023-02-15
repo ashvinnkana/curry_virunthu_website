@@ -1,0 +1,34 @@
+<div class="modal">
+    <h1 *ngIf="crud == 'add'">Add New Item</h1>
+    <h1 *ngIf="crud == 'update'">Update Item</h1>
+    <input type="text" placeholder="label" [(ngModel)]="data.label"><br>
+    <textarea placeholder="description"  [(ngModel)]="data.description"
+    style="width: 90%; height: 10vh;"></textarea><br>
+    <input type="number" placeholder="price"  [(ngModel)]="data.price"><br>
+
+    <select  [(ngModel)]="data.category">
+        <option [ngValue]="">-- CHOOSE CATEGORY --</option>
+        <option [ngValue]="cat.id" *ngFor="let cat of categories">{{cat.label}}</option>
+    </select><br>
+    
+    <div *ngIf="data.category =='O5ZPchH3c6TEVhjyzeOn'">
+        <button *ngIf="data.isVeg" (click)="curryVegSwitch()">VEG</button>
+        <button *ngIf="!data.isVeg" (click)="curryVegSwitch()">NON-VEG</button>
+    </div><br>
+
+    <img [src]="data.img" alt="add image" style="height: 15vw; width: 18vw;object-fit: cover;">
+
+    <input type="file" placeholder="image"><br>
+
+    <br>
+    <div *ngFor="let choice of data.choices; index as i">
+        <button (click)="deleteChoice(i)">DELETE</button>
+        <input type="text" [(ngModel)]="choice.label">
+        <button *ngIf="choice.isVeg" (click)="choiceVegSwitch(i)">VEG</button>
+        <button *ngIf="!choice.isVeg" (click)="choiceVegSwitch(i)">NON-VEG</button>
+        <button *ngIf="choice.isAvailable" (click)="choiceAvailableSwitch(i)">AVAILABLE</button>
+        <button *ngIf="!choice.isAvailable" (click)="choiceAvailableSwitch(i)">SOLD OUT</button>
+    </div><br>
+    <button (click)="addChoice()">ADD CHOICE</button>
+    <br><br>
+</div>

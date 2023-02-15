@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 import * as Hammer from 'hammerjs';
 import {HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
@@ -18,6 +19,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HeaderComponent } from './components/header/header.component';
 import { BillingDocketComponent } from './components/billing-docket/billing-docket.component';
 import { ItemManageComponent } from './components/item-manage/item-manage.component';
+import { ItemCrudComponent } from './components/item-crud/item-crud.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -34,7 +36,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     PageNotFoundComponent,
     HeaderComponent,
     BillingDocketComponent,
-    ItemManageComponent
+    ItemManageComponent,
+    ItemCrudComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [
     {

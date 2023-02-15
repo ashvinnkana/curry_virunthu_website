@@ -22,3 +22,31 @@
   padding: 1vh 1vw;
   box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.3);
 }
+
+.addItem {
+  background-color: rgb(60, 173, 94);
+  border: none;
+  box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 1vh 1vw;
+  cursor: pointer;
+}
+
+.modal-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 91vh;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal {
+  background-color: white;
+  width: 40%;
+  height: 80%;
+  position: absolute;
+  left: 30%;
+  top: 10%;
+  box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.3);
+}
