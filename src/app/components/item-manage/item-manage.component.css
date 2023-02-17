@@ -50,3 +50,11 @@
   top: 10%;
   box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.3);
 }
+
+.close-modal {
+  color: white;
+  position: absolute;
+  top: 5vh;
+  left: 68vw;
+  font-size: 2vw;
+}

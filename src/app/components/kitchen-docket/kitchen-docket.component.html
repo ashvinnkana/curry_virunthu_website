@@ -86,8 +86,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="customer-content">
+                <div class="customer-content" *ngIf="order.orderType == 'Dine-in'">
                     Order for {{order.customer}}
+                </div>
+                <div class="customer-content" *ngIf="order.orderType == 'Takeaway'">
+                    Order for {{order.takeawayPerson}}
                 </div>
             </div>
 

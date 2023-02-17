@@ -14,42 +14,41 @@ export class ItemManageComponent {
   public items: any = [];
   public categories: any = [];
 
-  public choosen_item_data = {
-    "buyCount": "16",
-    "category": "uCEqphrnucw50HI2ZzFc",
-    "choices": [
-      {
-        "isAvailable": true,
-        "isVeg": false,
-        "label": "Chicken Kalaki",
-        "meat": "UnaQzVNZOXH15OP8Trpr"
-      },
-      {
-        "isAvailable": true,
-        "isVeg": false,
-        "label": "Mutton Kalaki",
-        "meat": "uHGEKtGA12T0TNGA4yvn"
-      },
-      {
-        "isAvailable": false,
-        "isVeg": false,
-        "label": "Beef Kalaki",
-        "meat": "fSzjiISmfEQc4Yf76rPJ"
-      }
-    ],
-    "description": "Kalakki is a famous street side food from Coimbatore. Its a soft scrambled egg with a little masala added of the choosen meat.",
-    "id": "6RVtOOBi95gkbMk3TnSM",
-    "img": "https://firebasestorage.googleapis.com/v0/b/curry-virunthu.appspot.com/o/assets%2Fimg%2Fitem-uploads%2Fkalaki.jpg?alt=media&token=34f886f6-dbda-4a16-8f81-108c0b45f49c",
-    "isAvailable": true,
-    "label": "Kalaki",
-    "price": "12"
-  }
+  public choosen_item_data = {}
+  public choosen_crud = "add"
 
   constructor(private itemService: ItemService, private catService: CategoryService) { }
 
   ngOnInit(): void {
     this.retrieveItems();
     this.retrieveCategory();
+  }
+
+  openAddModal() {
+    this.choosen_item_data = {
+      "buyCount": "0",
+      "category": "",
+      "choices": [],
+      "description": "",
+      "img": "",
+      "isAvailable": true,
+      "label": "",
+      "price": "0",
+      "addon":""
+    }
+    this.choosen_crud = "add"
+    this.isModal = true
+  }
+
+  openUpdateModal(data:any) {
+    this.choosen_item_data = data
+    this.choosen_crud = "update"
+    this.isModal = true
+  }
+
+  isModal = false;
+  closeModal() {
+    this.isModal = false
   }
 
   retrieveItems(): void {

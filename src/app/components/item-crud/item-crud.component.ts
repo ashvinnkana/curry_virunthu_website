@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
+
+import { SafeUrl, DomSanitizer } from "@angular/platform-browser";
+import { ItemService } from 'src/app/services/item.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-item-crud',
@@ -13,13 +17,73 @@ export class ItemCrudComponent {
   @Input() crud: any;
   @Output() isComplete = new EventEmitter<string>();
 
-  
+
   public categories: any = [];
 
-  constructor( private catService: CategoryService) { }
+  constructor(private itemService: ItemService, private catService: CategoryService, 
+    private sanitizer: DomSanitizer, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.retrieveCategory();
+  }
+
+  public loadedImageFile:any = null;
+
+  imageLoaded(evt: any) {
+    this.loadedImageFile = evt.target.files[0]
+    this.data.img = this.sanitizer.bypassSecurityTrustUrl(
+      window.URL.createObjectURL(evt.target.files[0])
+    );
+  }
+
+  updateData() {
+    if (this.loadedImageFile != null) {
+      this.pushFileToStorage('update')
+    } else {
+      this.pushToFirestore()
+    }
+  }
+
+  addData() {
+    if (this.loadedImageFile != null) {
+      this.pushFileToStorage('add')
+    } else {
+      this.addToFirestore()
+    }
+  }
+
+  addToFirestore() {
+    this.itemService.create(this.data).then((result)=>{
+      console.log(result);
+    })
+  }
+
+  pushToFirestore() {
+    this.itemService.update(this.data.id, this.data).then((result)=>{
+      console.log(result);
+    })
+  }
+
+  private basePath = '/assets/img/item-uploads';
+
+  pushFileToStorage(type:any) {
+    const filePath = `${this.basePath}/${this.loadedImageFile.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, this.loadedImageFile);
+  
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          console.log(downloadURL)
+          this.data.img = downloadURL;
+          if (type == 'add'){
+            this.addToFirestore()
+          } else {
+            this.pushToFirestore()
+          }
+        });
+      })
+    ).subscribe();
   }
 
   retrieveCategory(): void {
@@ -53,9 +117,9 @@ export class ItemCrudComponent {
 
   addChoice() {
     this.data.choices.push({
-      "label":"",
-      "isVeg":false,
-      "isAvailable":true
+      "label": "",
+      "isVeg": false,
+      "isAvailable": true
     })
   }
 }

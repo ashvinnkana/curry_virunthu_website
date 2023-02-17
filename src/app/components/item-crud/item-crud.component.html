@@ -4,10 +4,10 @@
     <input type="text" placeholder="label" [(ngModel)]="data.label"><br>
     <textarea placeholder="description"  [(ngModel)]="data.description"
     style="width: 90%; height: 10vh;"></textarea><br>
-    <input type="number" placeholder="price"  [(ngModel)]="data.price"><br>
+    <input type="text" placeholder="price"  [(ngModel)]="data.price"><br>
 
     <select  [(ngModel)]="data.category">
-        <option [ngValue]="">-- CHOOSE CATEGORY --</option>
+        <option ngValue="">-- CHOOSE CATEGORY --</option>
         <option [ngValue]="cat.id" *ngFor="let cat of categories">{{cat.label}}</option>
     </select><br>
     
@@ -18,7 +18,7 @@
 
     <img [src]="data.img" alt="add image" style="height: 15vw; width: 18vw;object-fit: cover;">
 
-    <input type="file" placeholder="image"><br>
+    <input type="file" placeholder="image" (change)="imageLoaded($event)"><br>
 
     <br>
     <div *ngFor="let choice of data.choices; index as i">
@@ -31,4 +31,7 @@
     </div><br>
     <button (click)="addChoice()">ADD CHOICE</button>
     <br><br>
+
+    <button  *ngIf="crud == 'update'" (click)="updateData()">UPDATE</button>
+    <button  *ngIf="crud == 'add'" (click)="addData()">SAVE</button>
 </div>
