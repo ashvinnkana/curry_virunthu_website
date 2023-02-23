@@ -32,6 +32,7 @@ export class ItemManageComponent {
       "description": "",
       "img": "",
       "isAvailable": true,
+      "isVeg": false,
       "label": "",
       "price": "0",
       "addon":""
