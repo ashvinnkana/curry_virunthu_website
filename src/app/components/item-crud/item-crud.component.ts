@@ -42,6 +42,7 @@ export class ItemCrudComponent {
     } else {
       this.pushToFirestore()
     }
+    this.isComplete.emit()
   }
 
   addData() {
@@ -50,6 +51,7 @@ export class ItemCrudComponent {
     } else {
       this.addToFirestore()
     }
+    this.isComplete.emit()
   }
 
   addToFirestore() {

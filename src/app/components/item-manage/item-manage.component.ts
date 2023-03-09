@@ -13,9 +13,14 @@ export class ItemManageComponent {
 
   public items: any = [];
   public categories: any = [];
+  public categoryData: any = {};
+  public categoryColorData: any = {};
 
   public choosen_item_data = {}
+
+
   public choosen_crud = "add"
+  public fliter_category = "all"
 
   constructor(private itemService: ItemService, private catService: CategoryService) { }
 
@@ -75,7 +80,24 @@ export class ItemManageComponent {
         )
       ).subscribe(data => {
         this.categories = data;
+        this.categoryData = {}
+        for(let category of data) {
+          this.categoryData[category.id] = category.label
+          this.categoryColorData[category.id] = category.color
+        }
       });
+  }
+
+  deleteItem(item:any, id: any) {
+    if (confirm("Do you confirm to delete item '"+ item +"' ? ")) {
+      this.itemService.delete(id).then(() => {
+
+      })
+      .catch((error) => {
+        console.error("Cannot delete item: ", error);
+    });
+    }
+    
   }
 
   changeAvailability(itemIndex : any) {

@@ -1,8 +1,9 @@
 .item {
   background-color: white;
   padding: 1vw 1vh;
-  box-shadow: 0 0.1vw 0.4vw 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.1vw 0.4vw 0 rgba(0, 0, 0, 0.5);
   margin-bottom: 1vh;
+  height: 3vh;
 }
 
 .available {
@@ -30,6 +31,7 @@
   color: white;
   padding: 1vh 1vw;
   cursor: pointer;
+  font-size: 1vw;
 }
 
 .modal-container {
