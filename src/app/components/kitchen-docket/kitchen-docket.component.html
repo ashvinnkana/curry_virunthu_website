@@ -7,7 +7,7 @@
 
         <div *ngFor="let order of orders; index as j;">
 
-            <div *ngIf="order.state=='ORDERED' || order.state=='PREPARING' " class="docket-container prevent-select">
+            <div *ngIf="order.state=='ORDERED' || order.state=='PREPARING'" class="docket-container prevent-select">
 
                 <!--Loose Containers-->
                 <div class="table-num" [style.backgroundColor]=getOrderColor(order.orderType)
@@ -105,13 +105,25 @@
         </div>
         <br>
         <div style="overflow-y: auto; height: 80vh;" 
-        *ngIf="foodSummary != null || drinkSummary != null || addonSummary != null">
+        *ngIf="foodSummary != null || drinkSummary != null || addonSummary != null || takeAwaySummary != null">
             <div class="item-heading"  *ngIf="foodSummary != null">
                 <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
                 <span style="margin-left: 0.7vw;">Food</span>
             </div>
             <br>
             <div class="item SummaryItem" *ngFor="let item of foodSummary | keyvalue">
+                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+                <div class="item-quantity">
+                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
+                        x {{item.value}}</a>
+                </div>
+            </div><br>
+            <div class="item-heading"  *ngIf="takeAwaySummary != null">
+                <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
+                <span style="margin-left: 0.7vw;">Takeaway (All)</span>
+            </div>
+            <br>
+            <div class="item SummaryItem" *ngFor="let item of takeAwaySummary | keyvalue">
                 <a style="color: black; font-size: 1vw;">{{item.key}}</a>
                 <div class="item-quantity">
                     <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
@@ -142,6 +154,7 @@
                         x {{item.value}}</a>
                 </div>
             </div>
+            <br><br><br><br>
         </div>
         
 

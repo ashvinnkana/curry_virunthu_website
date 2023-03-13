@@ -14,6 +14,7 @@ export class KitchenDocketComponent {
 
   public orders: any = [];
   public foodSummary: any = {};
+  public takeAwaySummary: any = {};
   public addonSummary: any = {};
   public drinkSummary: any = {};
 
@@ -59,45 +60,77 @@ export class KitchenDocketComponent {
         this.foodSummary = {}
         this.drinkSummary = {}
         this.addonSummary = {}
+        this.takeAwaySummary = {}
         for (let order of this.orders) {
           if (order["state"] == "ORDERED" || order["state"] == "PREPARING") {
             for (let food of order["foodOrder"]) {
-              if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
-                if (this.foodSummary[food["label"]]) {
-                  this.foodSummary[food["label"]] += food["quantity"] - food["completedCount"]
-                } else {
-                  this.foodSummary[food["label"]] = food["quantity"] - food["completedCount"]
-                }
-
-                if (food["addon"]) {
-                  if (this.addonSummary[food["addon"]]) {
-                    this.addonSummary[food["addon"]] += 1
+              if (order["orderType"] == 'Dine-in') {
+                if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
+                  if (this.foodSummary[food["label"]]) {
+                    this.foodSummary[food["label"]] += food["quantity"] - food["completedCount"]
                   } else {
-                    this.addonSummary[food["addon"]] = 1
+                    this.foodSummary[food["label"]] = food["quantity"] - food["completedCount"]
+                  }
+
+                  if (food["addon"]) {
+                    if (this.addonSummary[food["addon"]]) {
+                      this.addonSummary[food["addon"]] += 1
+                    } else {
+                      this.addonSummary[food["addon"]] = 1
+                    }
+                  }
+                }
+              } else {
+                if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
+                  if (this.takeAwaySummary[food["label"]]) {
+                    this.takeAwaySummary[food["label"]] += food["quantity"] - food["completedCount"]
+                  } else {
+                    this.takeAwaySummary[food["label"]] = food["quantity"] - food["completedCount"]
+                  }
+
+                  if (food["addon"]) {
+                    if (this.takeAwaySummary[food["addon"]]) {
+                      this.takeAwaySummary[food["addon"]] += 1
+                    } else {
+                      this.takeAwaySummary[food["addon"]] = 1
+                    }
                   }
                 }
               }
             }
             for (let drink of order["drinkOrder"]) {
-              if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
-                if (this.drinkSummary[drink["label"]]) {
-                  this.drinkSummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
-                } else {
-                  this.drinkSummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
+              if (order["orderType"] == 'Dine-in') {
+                if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
+                  if (this.drinkSummary[drink["label"]]) {
+                    this.drinkSummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
+                  } else {
+                    this.drinkSummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
+                  }
+                }
+              } else {
+                if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
+                  if (this.takeAwaySummary[drink["label"]]) {
+                    this.takeAwaySummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
+                  } else {
+                    this.takeAwaySummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
+                  }
                 }
               }
             }
           }
         }
 
-        if(Object.keys(this.foodSummary).length == 0) {
+        if (Object.keys(this.foodSummary).length == 0) {
           this.foodSummary = null
         }
-        if(Object.keys(this.drinkSummary).length == 0) {
+        if (Object.keys(this.drinkSummary).length == 0) {
           this.drinkSummary = null
         }
-        if(Object.keys(this.addonSummary).length == 0) {
+        if (Object.keys(this.addonSummary).length == 0) {
           this.addonSummary = null
+        }
+        if (Object.keys(this.takeAwaySummary).length == 0) {
+          this.takeAwaySummary = null
         }
 
       });
@@ -144,7 +177,6 @@ export class KitchenDocketComponent {
   }
 
   handleResetItem(orderIndex: any, itemIndex: any, itemType: any) {
-    this.orders[orderIndex]["state"] = "PREPARING"
     if (this.orders[orderIndex][itemType][itemIndex]["state"] != 'ORDERED' && this.orders[orderIndex][itemType][itemIndex]["state"] != 'REMOVED') {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "ORDERED";
       this.orders[orderIndex]["completedCount"] -= this.orders[orderIndex][itemType][itemIndex]["completedCount"];
@@ -154,6 +186,7 @@ export class KitchenDocketComponent {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "REMOVED";
       this.orders[orderIndex]["completedCount"] -= this.orders[orderIndex][itemType][itemIndex]["completedCount"];
       this.orders[orderIndex]["orderQuantity"] -= this.orders[orderIndex][itemType][itemIndex]["quantity"];
+      this.orders[orderIndex]["total"] -= this.orders[orderIndex][itemType][itemIndex]["totalPrice"];
       this.orders[orderIndex][itemType][itemIndex]["completedCount"] = 0;
       if (this.orders[orderIndex]["orderQuantity"] == 0)
         this.orders[orderIndex]["completedPercent"] = 100
@@ -166,7 +199,6 @@ export class KitchenDocketComponent {
   }
 
   handleCompleteItem(orderIndex: any, itemIndex: any, itemType: any) {
-    this.orders[orderIndex]["state"] = "PREPARING"
     if (this.orders[orderIndex][itemType][itemIndex]["state"] != 'REMOVED' && this.orders[orderIndex][itemType][itemIndex]["state"] != 'DONE') {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "DONE";
       this.orders[orderIndex]["completedCount"] += this.orders[orderIndex][itemType][itemIndex]["quantity"] - this.orders[orderIndex][itemType][itemIndex]["completedCount"];
@@ -175,6 +207,7 @@ export class KitchenDocketComponent {
     } else if (this.orders[orderIndex][itemType][itemIndex]["state"] == 'REMOVED') {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "ORDERED";
       this.orders[orderIndex]["orderQuantity"] += this.orders[orderIndex][itemType][itemIndex]["quantity"];
+      this.orders[orderIndex]["total"] += this.orders[orderIndex][itemType][itemIndex]["totalPrice"];
       this.updateCompletedPercent(orderIndex);
     }
 

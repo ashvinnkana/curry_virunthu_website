@@ -36,7 +36,8 @@
                         <span style="margin-left: 0.7vw;">Food</span>
                     </div>
                     <div class="item-content" *ngIf="order.foodOrder.length!=0">
-                        <div class="item" *ngFor="let food of order.foodOrder; index as i;">
+                        <div class="item" *ngFor="let food of order.foodOrder; index as i;"
+                            [style.backgroundColor]="food.state=='REMOVED'?'#ffb8b8':'white'">
                             <a style="color: black; font-size: 1vw;">{{food.label}}</a><br>
                             <a style="color: rgb(51, 51, 51); font-size: 0.8vw;">{{food.addon}}</a>
 
@@ -55,7 +56,8 @@
                         <span style="margin-left: 0.5vw;">Beverage</span>
                     </div>
                     <div class="item-content" *ngIf="order.drinkOrder.length!=0">
-                        <div class="item" *ngFor="let drink of order.drinkOrder; index as i;">
+                        <div class="item" *ngFor="let drink of order.drinkOrder; index as i;"
+                        [style.backgroundColor]="drink.state=='REMOVED'?'#ffb8b8':'white'">
                             <a style="color: black; font-size: 1vw;">{{drink.label}}</a>
 
                             <div class="item-quantity">

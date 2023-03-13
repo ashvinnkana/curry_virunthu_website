@@ -1,2 +1,12 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
+<div *ngIf="isAdmin"><router-outlet></router-outlet></div>
+<div *ngIf="!isAdmin" style="color: red; text-align: center;margin-top: 5vh; font-size: 3vw;">You are not authorized to access this panel!<br>Refresh to Try Again</div>
+
+<div style="position: fixed; z-index: 999;background-color: rgb(68, 68, 68);height: 100vh;width: 100vw;top: 0;left: 0; text-align: center;"
+*ngIf="isSuitable">
+    <br>
+<img src="./../assets/screen-resolution.png" alt=""><br>
+<a style="color:#38956B; font-size: 4vw; font-weight: bold;">SCREEN RESOLUTION</a><br>
+<a style="color:#38956B; font-size: 4vw; font-weight: bold;">{{screenWidth}} X {{screenHeight}}</a><br>
+<a style="color:#38956B">not suitable for adminstration panel</a>
+</div>

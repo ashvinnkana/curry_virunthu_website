@@ -46,6 +46,21 @@ export class ItemCrudComponent {
   }
 
   addData() {
+    if (this.data.label == '') {
+      alert("Item label cannot be null");
+      return
+    }
+
+    if (this.data.category == '') {
+      alert("Item category cannot be null");
+      return
+    }
+
+    if (this.data.price < 0) {
+      alert("Item Price cannot be Negative");
+      return
+    }
+      
     if (this.loadedImageFile != null) {
       this.pushFileToStorage('add')
     } else {
