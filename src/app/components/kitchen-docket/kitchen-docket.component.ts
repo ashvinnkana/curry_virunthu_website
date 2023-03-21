@@ -14,9 +14,11 @@ export class KitchenDocketComponent {
 
   public orders: any = [];
   public foodSummary: any = {};
-  public takeAwaySummary: any = {};
   public addonSummary: any = {};
   public drinkSummary: any = {};
+  public foodList: any = [];
+  public addonList: any = [];
+  public drinkList: any = [];
 
   public swiping = false;
 
@@ -60,62 +62,48 @@ export class KitchenDocketComponent {
         this.foodSummary = {}
         this.drinkSummary = {}
         this.addonSummary = {}
-        this.takeAwaySummary = {}
+
+        this.foodList = []
+        this.addonList = []
+        this.drinkList =[]
         for (let order of this.orders) {
           if (order["state"] == "ORDERED" || order["state"] == "PREPARING") {
             for (let food of order["foodOrder"]) {
-              if (order["orderType"] == 'Dine-in') {
                 if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
-                  if (this.foodSummary[food["label"]]) {
-                    this.foodSummary[food["label"]] += food["quantity"] - food["completedCount"]
-                  } else {
-                    this.foodSummary[food["label"]] = food["quantity"] - food["completedCount"]
-                  }
-
-                  if (food["addon"]) {
-                    if (this.addonSummary[food["addon"]]) {
-                      this.addonSummary[food["addon"]] += 1
-                    } else {
-                      this.addonSummary[food["addon"]] = 1
+                  this.foodList.push(food["label"])
+                  if (!this.foodSummary[food["label"]]) {
+                    this.foodSummary[food["label"]] = {
+                      "Dine-in":0,
+                      "Takeaway":0
                     }
                   }
-                }
-              } else {
-                if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
-                  if (this.takeAwaySummary[food["label"]]) {
-                    this.takeAwaySummary[food["label"]] += food["quantity"] - food["completedCount"]
-                  } else {
-                    this.takeAwaySummary[food["label"]] = food["quantity"] - food["completedCount"]
-                  }
+                  this.foodSummary[food["label"]][order['orderType']] += food["quantity"] - food["completedCount"]
+                  
 
                   if (food["addon"]) {
-                    if (this.takeAwaySummary[food["addon"]]) {
-                      this.takeAwaySummary[food["addon"]] += 1
-                    } else {
-                      this.takeAwaySummary[food["addon"]] = 1
+                    this.addonList.push(food["addon"])
+                    if (!this.addonSummary[food["addon"]]) {
+                      this.addonSummary[food["addon"]] = {
+                        "Dine-in":0,
+                        "Takeaway":0
+                      }
                     }
+                    this.addonSummary[food["addon"]][order["orderType"]] += food["quantity"] - food["completedCount"]
                   }
                 }
-              }
             }
+
             for (let drink of order["drinkOrder"]) {
-              if (order["orderType"] == 'Dine-in') {
                 if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
-                  if (this.drinkSummary[drink["label"]]) {
-                    this.drinkSummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
-                  } else {
-                    this.drinkSummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
+                  this.drinkList.push(drink["label"])
+                  if (!this.drinkSummary[drink["label"]]) {
+                    this.drinkSummary[drink["label"]] = {
+                      "Dine-in":0,
+                      "Takeaway":0
+                    }
                   }
+                  this.drinkSummary[drink["label"]][order["orderType"]] += drink["quantity"] - drink["completedCount"]
                 }
-              } else {
-                if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
-                  if (this.takeAwaySummary[drink["label"]]) {
-                    this.takeAwaySummary[drink["label"]] += drink["quantity"] - drink["completedCount"]
-                  } else {
-                    this.takeAwaySummary[drink["label"]] = drink["quantity"] - drink["completedCount"]
-                  }
-                }
-              }
             }
           }
         }
@@ -128,9 +116,6 @@ export class KitchenDocketComponent {
         }
         if (Object.keys(this.addonSummary).length == 0) {
           this.addonSummary = null
-        }
-        if (Object.keys(this.takeAwaySummary).length == 0) {
-          this.takeAwaySummary = null
         }
 
       });

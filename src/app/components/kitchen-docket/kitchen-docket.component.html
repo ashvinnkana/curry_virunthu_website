@@ -105,41 +105,40 @@
         </div>
         <br>
         <div style="overflow-y: auto; height: 80vh;" 
-        *ngIf="foodSummary != null || drinkSummary != null || addonSummary != null || takeAwaySummary != null">
+        *ngIf="foodSummary != null || drinkSummary != null || addonSummary != null">
             <div class="item-heading"  *ngIf="foodSummary != null">
                 <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
                 <span style="margin-left: 0.7vw;">Food</span>
             </div>
             <br>
-            <div class="item SummaryItem" *ngFor="let item of foodSummary | keyvalue">
-                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+            <div class="item SummaryItem" *ngFor="let item of foodList">
+                <a style="color: black; font-size: 1vw;">{{item}}</a>
                 <div class="item-quantity">
-                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
-                        x {{item.value}}</a>
+                    <a *ngIf="foodSummary[item]['Dine-in']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#0B5FA3;padding: 0.5vh 0.5vw; color: lightgray;">
+                        x {{foodSummary[item]['Dine-in']}}</a>
+
+                    <a  *ngIf="foodSummary[item]['Takeaway']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#a30b69;padding: 0.5vh 0.5vw; color: lightgray;margin-left: 0.2vw;">
+                        x {{foodSummary[item]['Takeaway']}}</a>
                 </div>
-            </div><br>
-            <div class="item-heading"  *ngIf="takeAwaySummary != null">
-                <i class="fas fa-utensils" style="margin-left: 0.3vw;"></i>
-                <span style="margin-left: 0.7vw;">Takeaway (All)</span>
             </div>
             <br>
-            <div class="item SummaryItem" *ngFor="let item of takeAwaySummary | keyvalue">
-                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
-                <div class="item-quantity">
-                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
-                        x {{item.value}}</a>
-                </div>
-            </div><br>
             <div class="item-heading" *ngIf="addonSummary != null">
                 <i class="fas fa-puzzle-piece"></i>
                 <span style="margin-left: 0.7vw;">Addons</span>
             </div>
             <br>
-            <div class="item SummaryItem" *ngFor="let item of addonSummary | keyvalue">
-                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+            <div class="item SummaryItem" *ngFor="let item of addonList">
+                <a style="color: black; font-size: 1vw;">{{item}}</a>
                 <div class="item-quantity">
-                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; color:#000;">
-                        x {{item.value}}</a>
+                    <a *ngIf="addonSummary[item]['Dine-in']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#0B5FA3;padding: 0.5vh 0.5vw; color: lightgray;">
+                        x {{addonSummary[item]['Dine-in']}}</a>
+
+                    <a  *ngIf="addonSummary[item]['Takeaway']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#a30b69;padding: 0.5vh 0.5vw; color: lightgray;margin-left: 0.2vw;">
+                        x {{addonSummary[item]['Takeaway']}}</a>
                 </div>
             </div><br>
             <div class="item-heading" *ngIf="drinkSummary != null">
@@ -147,11 +146,16 @@
                 <span style="margin-left: 0.5vw;">Beverage</span>
             </div>
             <br>
-            <div class="item SummaryItem" *ngFor="let item of drinkSummary | keyvalue">
-                <a style="color: black; font-size: 1vw;">{{item.key}}</a>
+            <div class="item SummaryItem" *ngFor="let item of drinkList">
+                <a style="color: black; font-size: 1vw;">{{item}}</a>
                 <div class="item-quantity">
-                    <a style="font-family: 'calibri'; font-size: 1vw; font-weight: bold;">
-                        x {{item.value}}</a>
+                    <a *ngIf="drinkSummary[item]['Dine-in']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#0B5FA3;padding: 0.5vh 0.5vw; color: lightgray;">
+                        x {{drinkSummary[item]['Dine-in']}}</a>
+
+                    <a  *ngIf="drinkSummary[item]['Takeaway']!=0"
+                    style="font-family: 'calibri'; font-size: 1vw; font-weight: bold; background-color:#a30b69;padding: 0.5vh 0.5vw; color: lightgray;margin-left: 0.2vw;">
+                        x {{drinkSummary[item]['Takeaway']}}</a>
                 </div>
             </div>
             <br><br><br><br>
