@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
+import { GlobalVariableService } from 'src/app/services/global-variable.service';
 
 @Component({
   selector: 'app-kitchen-docket',
@@ -38,7 +39,7 @@ export class KitchenDocketComponent {
 
   public updateDocketList: any = []
 
-  constructor(private orderService: OrderService, private customerService: CustomerService) { }
+  constructor(private orderService: OrderService, private customerService: CustomerService, public globalVariableService: GlobalVariableService) { }
 
   ngOnInit(): void {
     this.retrieveOrders();
@@ -47,6 +48,15 @@ export class KitchenDocketComponent {
       this.currentTime = Date.now()
     }, 1000)
 
+  }
+
+  loginAdmin(): void {
+    var password = prompt("Enter Administration Password: ")
+     if (password == '@shvinn') {
+       this.globalVariableService.isAdmin = true
+     } else {
+       this.globalVariableService.isAdmin = false
+     }
   }
 
   retrieveOrders(): void {
@@ -58,7 +68,7 @@ export class KitchenDocketComponent {
           )
         )
       ).subscribe(data => {
-        this.orders = data;
+        this.orders = []
         this.foodSummary = {}
         this.drinkSummary = {}
         this.addonSummary = {}
@@ -66,12 +76,14 @@ export class KitchenDocketComponent {
         this.foodList = []
         this.addonList = []
         this.drinkList =[]
-        for (let order of this.orders) {
+        for (let order of data) {
           if (order["state"] == "ORDERED" || order["state"] == "PREPARING") {
+            this.orders.push(order)
             for (let food of order["foodOrder"]) {
                 if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
-                  this.foodList.push(food["label"])
+                  
                   if (!this.foodSummary[food["label"]]) {
+                    this.foodList.push(food["label"])
                     this.foodSummary[food["label"]] = {
                       "Dine-in":0,
                       "Takeaway":0
@@ -81,8 +93,9 @@ export class KitchenDocketComponent {
                   
 
                   if (food["addon"]) {
-                    this.addonList.push(food["addon"])
+                    
                     if (!this.addonSummary[food["addon"]]) {
+                      this.addonList.push(food["addon"])
                       this.addonSummary[food["addon"]] = {
                         "Dine-in":0,
                         "Takeaway":0
@@ -95,8 +108,9 @@ export class KitchenDocketComponent {
 
             for (let drink of order["drinkOrder"]) {
                 if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
-                  this.drinkList.push(drink["label"])
+                  
                   if (!this.drinkSummary[drink["label"]]) {
+                    this.drinkList.push(drink["label"])
                     this.drinkSummary[drink["label"]] = {
                       "Dine-in":0,
                       "Takeaway":0
@@ -162,6 +176,7 @@ export class KitchenDocketComponent {
   }
 
   handleResetItem(orderIndex: any, itemIndex: any, itemType: any) {
+    this.orders[orderIndex]["state"] = "PREPARING"
     if (this.orders[orderIndex][itemType][itemIndex]["state"] != 'ORDERED' && this.orders[orderIndex][itemType][itemIndex]["state"] != 'REMOVED') {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "ORDERED";
       this.orders[orderIndex]["completedCount"] -= this.orders[orderIndex][itemType][itemIndex]["completedCount"];
@@ -184,6 +199,7 @@ export class KitchenDocketComponent {
   }
 
   handleCompleteItem(orderIndex: any, itemIndex: any, itemType: any) {
+    this.orders[orderIndex]["state"] = "PREPARING"
     if (this.orders[orderIndex][itemType][itemIndex]["state"] != 'REMOVED' && this.orders[orderIndex][itemType][itemIndex]["state"] != 'DONE') {
       this.orders[orderIndex][itemType][itemIndex]["state"] = "DONE";
       this.orders[orderIndex]["completedCount"] += this.orders[orderIndex][itemType][itemIndex]["quantity"] - this.orders[orderIndex][itemType][itemIndex]["completedCount"];

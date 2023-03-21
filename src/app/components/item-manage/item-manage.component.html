@@ -1,4 +1,10 @@
-<div style="position: relative;">
+<div  *ngIf="!globalVariableService.isAdmin"
+    style="color: red; padding: 1vw 1vh; font-size: 1.5vw;">
+        You are not authorized to access this panel! 
+        <a (click)="loginAdmin()"
+        style="color: blue; cursor: pointer;">Login</a>
+         as Administrator</div> 
+<div style="position: relative;"   *ngIf="globalVariableService.isAdmin">
     <div style=" padding: 2vh 4vw; margin:0; height: 5vh;">
         <button class="addItem" (click)="openAddModal()" style="float:right">Add Item</button>
         <div style="font-size: 1vw;width: 9vw; float: left; padding-top: 1vh;" >Filter by Category : </div>
@@ -9,7 +15,7 @@
         </select>
     </div>
     
-    <div style="height: 75vh; overflow-y: auto; padding: 0 4vw; padding-bottom: 3vh; padding-top: 1vh;">
+    <div style="height: 77vh; overflow-y: auto; padding: 0 4vw; padding-bottom: 3vh; padding-top: 1vh;">
         <div *ngFor="let item of items; index as j;">
             <div class="item" *ngIf="fliter_category == 'all' || fliter_category == item.category"
             [style.backgroundColor]="item.isAvailable ? 'white' : '#e6e3e3'">

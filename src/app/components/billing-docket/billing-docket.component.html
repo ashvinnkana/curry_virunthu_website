@@ -1,9 +1,19 @@
 <div class="container">
-    <div class="margin">
+    <div  *ngIf="!globalVariableService.isAdmin"
+    style="color: red; padding: 1vw 1vh; font-size: 1.5vw;">
+        You are not authorized to access this panel! 
+        <a (click)="loginAdmin()"
+        style="color: blue; cursor: pointer;">Login</a>
+         as Administrator</div>
+    <div *ngIf="globalVariableService.isAdmin" class="margin">
         <!--Side fade box-->
         <div class="side-fade-box"></div>
         <!--Bottom fade box
         <div class="bottom-fade-box"></div>-->
+
+        <div *ngIf="orders.length == 0"
+    style="letter-spacing: 0.3vw; font-weight: bold; color: dodgerblue; padding: 1vw 1vh; font-size: 1.2vw;">
+        NO PENDING BILLING</div>
 
         <div *ngFor="let order of orders; index as j;">
 

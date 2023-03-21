@@ -8,7 +8,6 @@ import { Component, HostListener } from '@angular/core';
 })
 export class AppComponent {
   title = 'curry_virunthu_website';
-  isAdmin = false
   isSuitable = true
   screenHeight:any =window.innerHeight;
   screenWidth:any =window.innerWidth;
@@ -30,11 +29,6 @@ export class AppComponent {
     } else {
       this.isSuitable= false  
     }
-     var password = prompt("Enter Administration Password: ")
-     if (password == '@shvinn') {
-       this.isAdmin = true
-     } else {
-       this.isAdmin = false
-     }
+     
   }
 }

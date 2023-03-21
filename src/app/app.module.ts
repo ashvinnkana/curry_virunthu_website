@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { BillingDocketComponent } from './components/billing-docket/billing-docket.component';
 import { ItemManageComponent } from './components/item-manage/item-manage.component';
 import { ItemCrudComponent } from './components/item-crud/item-crud.component';
+import { TodaysMenuComponent } from './components/todays-menu/todays-menu.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -37,7 +38,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     HeaderComponent,
     BillingDocketComponent,
     ItemManageComponent,
-    ItemCrudComponent
+    ItemCrudComponent,
+    TodaysMenuComponent
   ],
   imports: [
     BrowserModule,

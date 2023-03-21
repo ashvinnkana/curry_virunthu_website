@@ -1,6 +1,6 @@
 .container {
     width: 100vw;
-    height: 91vh;
+    height: 93vh;
     position: absolute;
     background-color: white;
     overflow-x: auto;
@@ -10,7 +10,7 @@
 
 .margin {
     width: 1000vw; 
-    height: 85vh;
+    height: 87vh;
     position: relative;
     margin: 3vh 2vw;
     margin-top: 0;
@@ -24,7 +24,7 @@
     position: fixed;
     right: 0;
     top: 9vh;
-    height: 91vh;
+    height: 93vh;
     width: 10vw;
     background-image: linear-gradient(to right, 
         rgba(255, 255, 255, 0), 
@@ -171,7 +171,7 @@
     z-index: 200;
     background-color: rgb(15, 15, 15);
     width: 30vw;
-    height: 93vh;
+    height: 95vh;
     border-left: solid 0.5vw black;
     border-radius: 10% 0 0 0;
     box-shadow: 0 0.3vw 0.8vw 0 rgba(0, 0, 0, 0.5);

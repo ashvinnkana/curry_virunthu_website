@@ -2,6 +2,7 @@ import { NONE_TYPE } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CustomerService } from 'src/app/services/customer.service';
+import { GlobalVariableService } from 'src/app/services/global-variable.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -30,7 +31,16 @@ export class BillingDocketComponent {
 
   public updateDocketList: any = []
 
-  constructor(private orderService: OrderService, private customerService: CustomerService) { }
+  constructor(private orderService: OrderService, private customerService: CustomerService, public globalVariableService: GlobalVariableService) { }
+
+  loginAdmin(): void {
+    var password = prompt("Enter Administration Password: ")
+     if (password == '@shvinn') {
+       this.globalVariableService.isAdmin = true
+     } else {
+       this.globalVariableService.isAdmin = false
+     }
+  }
 
   ngOnInit(): void {
     this.retrieveOrders();
@@ -59,7 +69,13 @@ export class BillingDocketComponent {
           )
         )
       ).subscribe(data => {
-        this.orders = data;
+        this.orders = []
+        for (let order of data) {
+          if (order["state"] == "BILLING") {
+            this.orders.push(order)
+          }
+
+        }
       });
   }
 

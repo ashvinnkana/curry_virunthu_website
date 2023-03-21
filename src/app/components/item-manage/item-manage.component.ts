@@ -3,6 +3,7 @@ import { ItemService } from 'src/app/services/item.service';
 
 import { map } from 'rxjs/operators';
 import { CategoryService } from 'src/app/services/category.service';
+import { GlobalVariableService } from 'src/app/services/global-variable.service';
 
 @Component({
   selector: 'app-item-manage',
@@ -22,8 +23,17 @@ export class ItemManageComponent {
   public choosen_crud = "add"
   public fliter_category = "all"
 
-  constructor(private itemService: ItemService, private catService: CategoryService) { }
+  constructor(private itemService: ItemService, private catService: CategoryService, public globalVariableService: GlobalVariableService) { }
 
+  loginAdmin(): void {
+    var password = prompt("Enter Administration Password: ")
+     if (password == '@shvinn') {
+       this.globalVariableService.isAdmin = true
+     } else {
+       this.globalVariableService.isAdmin = false
+     }
+  }
+  
   ngOnInit(): void {
     this.retrieveItems();
     this.retrieveCategory();
