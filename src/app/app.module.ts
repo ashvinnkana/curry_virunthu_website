@@ -21,6 +21,8 @@ import { BillingDocketComponent } from './components/billing-docket/billing-dock
 import { ItemManageComponent } from './components/item-manage/item-manage.component';
 import { ItemCrudComponent } from './components/item-crud/item-crud.component';
 import { TodaysMenuComponent } from './components/todays-menu/todays-menu.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -39,7 +41,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     BillingDocketComponent,
     ItemManageComponent,
     ItemCrudComponent,
-    TodaysMenuComponent
+    TodaysMenuComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

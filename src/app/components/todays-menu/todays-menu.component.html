@@ -1,1 +1,26 @@
-<p>todays-menu works!</p>
+<div style="overflow-y: auto; overflow-x: hidden; height: 100vh;background-color: rgb(20, 20, 20);">
+    <img src="../../../assets/bg1.jpg" alt="" style="width: 100vw;">
+    <div style="position: absolute; top: 80px; display: flex;justify-content: right;text-align: right;width: 100vw;">
+        <div class="content">
+            <img src="../../../assets/cheff.png" alt="" class="cheff-css">
+            <img src="../../../assets/today-menu.png" style="width: 380px;">
+
+            <div class="grid">
+                <div class="col" *ngFor="let item of items">
+                    <img [src]="item.img" style="object-fit: cover;
+                    width: 100%;height: 250px;color: white;">
+                    <div style="position: absolute; bottom: 0; font-size: 1rem;
+                    background: linear-gradient(#00000000, #000000e7); width: 95%;  color: white; font-weight: bold; padding: 10px; padding-top: 150px;">
+                    <a>{{item.label}}</a><br>
+                    <a [style.color]="categoryColorData[item.category]" style="font-size: .8rem;">{{categoryData[item.category]}}</a>
+                    </div>
+
+                    <div
+                    style="position: absolute; right: 20px;bottom: 10px;"
+                    ><a style="color: #04AA6D; font-size: 2rem;">${{item.price}}</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

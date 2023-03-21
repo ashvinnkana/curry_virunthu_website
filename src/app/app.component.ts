@@ -8,7 +8,7 @@ import { Component, HostListener } from '@angular/core';
 })
 export class AppComponent {
   title = 'curry_virunthu_website';
-  isSuitable = true
+  isSuitable = false
   screenHeight:any =window.innerHeight;
   screenWidth:any =window.innerWidth;
 
@@ -17,7 +17,7 @@ export class AppComponent {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
     if (this.screenHeight > (this.screenWidth - 250)) {
-      this.isSuitable= true
+      this.isSuitable= false
     } else {
       this.isSuitable= false
     }
@@ -25,7 +25,7 @@ export class AppComponent {
 
   constructor() {
     if (this.screenHeight > (this.screenWidth - 250)) {
-      this.isSuitable= true
+      this.isSuitable= false
     } else {
       this.isSuitable= false  
     }

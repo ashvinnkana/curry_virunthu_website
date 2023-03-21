@@ -6,6 +6,8 @@ import { BillingDocketComponent } from './components/billing-docket/billing-dock
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ItemManageComponent } from './components/item-manage/item-manage.component';
 import { TodaysMenuComponent } from './components/todays-menu/todays-menu.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'todays-menu', pathMatch: 'full' },
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path: 'admin/billing-docket', component: BillingDocketComponent },
   { path: 'admin/item-manage', component: ItemManageComponent },
   { path: 'todays-menu', component: TodaysMenuComponent },
+  { path: 'about-us', component: AboutComponent },
+  { path: 'contact-info', component: ContactComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

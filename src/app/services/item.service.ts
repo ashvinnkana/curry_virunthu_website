@@ -18,6 +18,10 @@ export class ItemService {
     return this.itemRef; 
   }
 
+  getByCategory(cat_id:any): AngularFirestoreCollection<any> {
+    return this.db.collection(this.dbPath, ref => ref.where('category','==',cat_id));
+  }
+
   update(id: string, data: any): Promise<void> {
     return this.itemRef.doc(id).update(data);
   }

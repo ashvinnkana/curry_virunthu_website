@@ -1,7 +1,23 @@
-<div class="container">
-    <ul>
+<div class="container" *ngIf="isAdminHeader">
+    <ul style="background-color: #333;" class="adminhaed">
         <li><a routerLink="/admin/kitchen-docket">D O C K E T</a></li>
         <li><a routerLink="/admin/billing-docket">B I L L I N G</a></li>
         <li><a routerLink="/admin/item-manage">I T E M</a></li>
     </ul>
+</div>
+<div class="navbar" *ngIf="!isAdminHeader" style="position: absolute;top: 0; left: 0;">
+    <div class="brand-title"><a>CURRYVIRUNDHU</a><img src="../../../assets/au.png" alt="" style="height: 30px;"></div>
+    <a class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+        <ul>
+            <li><a routerLink="/todays-menu" [style.backgroundColor]="navChoice == 1? '#04AA6D' : '#04aa6d00'">M E N U</a></li>
+            <li><a routerLink="/about-us"  [style.backgroundColor]="navChoice == 2? '#04AA6D' : '#04aa6d00'">A B O U T</a></li>
+            <li><a routerLink="/contact-info"   [style.backgroundColor]="navChoice == 3? '#04AA6D' : '#04aa6d00'">C O N T A C T</a></li>
+        </ul>
+    </div>
+    
 </div>
