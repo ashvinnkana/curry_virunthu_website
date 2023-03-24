@@ -9,15 +9,22 @@ import { TableManageService } from 'src/app/services/table-manage.service';
 export class TableManagementComponent {
   data:any = {
     "customer":"",
-    "state":"FREE"
+    "state":"FREE",
+    "tableNum":0
   }
   tableNum = ""
   constructor(private tableService: TableManageService) {}
 
   createTable() {
+    this.data["tableNum"] = Number(this.tableNum)
     this.tableService.create(this.tableNum, this.data).then(() => {
       console.log("Document successfully written!");
       this.tableNum = ""
+      this.data = {
+        "customer":"",
+        "state":"FREE",
+        "tableNum":0
+      }
   });
   }
 }
