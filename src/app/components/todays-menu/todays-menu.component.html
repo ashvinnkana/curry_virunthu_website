@@ -4,8 +4,11 @@
         <div class="content">
             <img src="../../../assets/cheff.png" alt="" class="cheff-css">
             <img src="../../../assets/today-menu.png" style="width: 380px;">
-
-            <div class="grid">
+            
+            <div *ngIf="loading">
+                <img src="../../../assets/loading.gif" style="width: 200px;margin-left: 50px;">
+            </div>
+            <div class="grid" *ngIf="!loading">
                 <div class="col" *ngFor="let item of items">
                     <img [src]="item.img" style="object-fit: cover;
                     width: 100%;height: 250px;color: white;">

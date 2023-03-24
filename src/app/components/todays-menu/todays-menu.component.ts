@@ -14,6 +14,7 @@ export class TodaysMenuComponent {
   public categories: any = [];
   public categoryData: any = {};
   public categoryColorData: any = {};
+  public loading = false
 
   constructor(private catService: CategoryService, private itemService: ItemService) {
     
@@ -28,6 +29,7 @@ export class TodaysMenuComponent {
   retrieveItems(): void {
     this.items = []
     for (let category of this.categories) {
+      this.loading = true
       if (category.id == 'zMyEDUtUyDBHPFfERBBD')
         continue;
         this.itemService.getByCategory(category.id)
@@ -38,15 +40,18 @@ export class TodaysMenuComponent {
             )
           )
         ).subscribe(data => {
+          
           for (let item of data) {
             this.items.push(item)
           }
+          this.loading = false
         });
     }
     
   }
 
   retrieveCategory(): void {
+    this.loading = true
     this.catService.getAll()
       .snapshotChanges().pipe(
         map(changes =>

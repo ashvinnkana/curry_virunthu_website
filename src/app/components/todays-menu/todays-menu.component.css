@@ -19,7 +19,7 @@
   }
 
   .content {
-    background-color: rgba(0, 0, 0, 0.719);
+    background-color: rgb(29, 29, 29);
     border-radius: 60px 60px 0 0;
     box-shadow: 0 0.8vw 1.4vw 0 rgba(0, 0, 0, 0.8);
     height: 92vh;
