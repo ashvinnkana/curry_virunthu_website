@@ -23,6 +23,7 @@ import { ItemCrudComponent } from './components/item-crud/item-crud.component';
 import { TodaysMenuComponent } from './components/todays-menu/todays-menu.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { TableManagementComponent } from './components/table-management/table-management.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -43,7 +44,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     ItemCrudComponent,
     TodaysMenuComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    TableManagementComponent
   ],
   imports: [
     BrowserModule,

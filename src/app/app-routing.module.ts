@@ -8,6 +8,7 @@ import { ItemManageComponent } from './components/item-manage/item-manage.compon
 import { TodaysMenuComponent } from './components/todays-menu/todays-menu.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { TableManagementComponent } from './components/table-management/table-management.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'todays-menu', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'todays-menu', component: TodaysMenuComponent },
   { path: 'about-us', component: AboutComponent },
   { path: 'contact-info', component: ContactComponent },
+  { path: 'admin/table-manage', component: TableManagementComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
