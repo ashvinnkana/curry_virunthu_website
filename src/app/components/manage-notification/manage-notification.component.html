@@ -1,0 +1,11 @@
+<select name="" id="" [(ngModel)]="customerId" [disabled]="sendAll">
+    <option value="">CHOOSE A CUSTOMER</option>
+    <option [ngValue]="cus.id" *ngFor="let cus of customers">{{cus.fname}} {{cus.lname}} ({{cus.mobile}})</option>
+</select>
+<input type="checkbox" [(ngModel)]="sendAll"
+[ngModelOptions]="{standalone: true}" ><label>SEND ALL</label>   
+<br>
+<input type="text" placeholder="TITLE" [(ngModel)]="title">
+<input type="text" placeholder="SUBTITLE" [(ngModel)]="subtitle">
+<input type="text" placeholder="BODY" [(ngModel)]="body"><br>
+<button (click)="sendNotification()">SUBMIT</button>

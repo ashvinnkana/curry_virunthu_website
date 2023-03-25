@@ -9,6 +9,7 @@ import { TodaysMenuComponent } from './components/todays-menu/todays-menu.compon
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { TableManagementComponent } from './components/table-management/table-management.component';
+import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'todays-menu', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'about-us', component: AboutComponent },
   { path: 'contact-info', component: ContactComponent },
   { path: 'admin/table-manage', component: TableManagementComponent },
+  { path: 'admin/manage-notification', component: ManageNotificationComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

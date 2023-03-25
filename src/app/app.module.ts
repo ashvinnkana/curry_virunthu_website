@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -24,6 +25,7 @@ import { TodaysMenuComponent } from './components/todays-menu/todays-menu.compon
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { TableManagementComponent } from './components/table-management/table-management.component';
+import { ManageNotificationComponent } from './components/manage-notification/manage-notification.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -45,7 +47,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TodaysMenuComponent,
     AboutComponent,
     ContactComponent,
-    TableManagementComponent
+    TableManagementComponent,
+    ManageNotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule,
   ],
   providers: [
     {
