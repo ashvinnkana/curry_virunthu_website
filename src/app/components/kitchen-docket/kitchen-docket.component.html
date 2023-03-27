@@ -96,11 +96,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="customer-content" *ngIf="order.orderType == 'Dine-in'">
-                    Order for {{order.customer}}
-                </div>
-                <div class="customer-content" *ngIf="order.orderType == 'Takeaway'">
-                    Order for {{order.takeawayPerson}}
+                <div class="customer-content">
+                    <br>
+                    Order for {{customerData[order.customer]?.fname}} {{customerData[order.customer]?.lname}}<br>
+                    <a style="color: rgb(226, 200, 150); font-size: larger; font-weight: bold;">{{order.customer}}</a><br>
+                    <p *ngIf="order.comment != ''">Comments:
+                        {{order.comment}}
+                    </p>
+                    <p *ngIf="order.comment == ''">** NO COMMENTS **
+                    </p>
+                    <div style="position: absolute;right: 1.5vw; top: 3vh; font-size: 2vw;" *ngIf="customerData[order.customer]?.rating">
+                        {{customerData[order.customer]?.rating}}
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div style="position: absolute;right: 1.5vw; top: 3vh; font-size: 2vw;" *ngIf="!customerData[order.customer]?.rating">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: rgb(245, 126, 126);"></i>
+                    </div>
                 </div>
             </div>
 
@@ -173,9 +184,9 @@
         
 
         <div style="color: white;"
-        *ngIf="foodSummary == null || drinkSummary == null || addonSummary == null">
-        <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   P E N D I N G   D O C K E T S</p></pre>
-        
+            *ngIf="foodSummary == null && drinkSummary == null && addonSummary == null">
+                <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   P E N D I N G   D O C K E T S</p></pre>
+        </div>
     </div>
     <div class="bottom-fade"></div>
 </div>

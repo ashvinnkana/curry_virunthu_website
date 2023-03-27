@@ -18,7 +18,16 @@
         <div *ngFor="let order of orders; index as j;">
 
             <div *ngIf="order.state=='BILLING'" class="docket-container prevent-select"
-            (click)="confirmPayment(j)">
+            (click)="selectDocket(j)"
+            [style.border]="this.selectedDockets.includes(j)?'0.5vh rgb(142, 236, 0) dashed':'none'">
+
+                <div *ngIf="this.selectedDockets.includes(j)"
+                
+                style="position: absolute; right: 8.5vw; width: 8vw;top: -2vh;font-size: 1vw; padding: 0.5vh 0;
+                box-shadow: 0 0.4vw 0.8vw 0 rgba(0, 0, 0, 0.5);
+                color: black; background-color: greenyellow; text-align: center; border-radius: 2vw;">
+                    <i class="fa-solid fa-circle-check"></i> SELECTED
+                </div>
 
                 <!--Loose Containers-->
                 <div class="table-num" [style.backgroundColor]=getOrderColor(order.orderType)
@@ -78,14 +87,44 @@
                         </div>
                     </div>
                 </div>
-                <div class="customer-content" *ngIf="order.orderType == 'Dine-in'">
-                    Order for {{order.customer}}
-                </div>
-                <div class="customer-content" *ngIf="order.orderType == 'Takeaway'">
-                    Order for {{order.takeawayPerson}}
+                
+                <div class="customer-content">
+                    <br>
+                    Order for {{customerData[order.customer]?.fname}} {{customerData[order.customer]?.lname}}<br>
+                    <a style="color: rgb(226, 200, 150); font-size: larger; font-weight: bold;">{{order.customer}}</a><br><br>
+                    <div style="position: absolute;right: 1.5vw; top: 3vh; font-size: 2vw;" *ngIf="customerData[order.customer]?.rating">
+                        {{customerData[order.customer]?.rating}}
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div style="position: absolute;right: 1.5vw; top: 3vh; font-size: 2vw;" *ngIf="!customerData[order.customer]?.rating">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: rgb(245, 126, 126);"></i>
+                    </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div *ngIf="globalVariableService.isAdmin" class="side-helper" [style.width.vw]="summaryWidth">
+        <div class="helper-heading" *ngIf="recieptData.dockets.length != 0">
+            <button>PAID</button>
+            <a *ngIf="summaryWidth == 30"
+            style="float: right;margin-right: 7vw;margin-top: 0.5vh; color: yellowgreen;text-align: right;">${{this.recieptData.total}}</a>
+        </div>
+        <div class="minimizer"
+        (click)="showSummary()">
+            <i class="fas fa-chevron-left" style="margin-top: 1.8vw;"></i>
+        </div>
+        <br>
+        <div style="overflow-y: auto; height: 80vh;"  *ngIf="recieptData.dockets.length != 0">
+            <div *ngFor="let docket of recieptData.dockets"
+            style="background-color: white; height: 5vh;margin-bottom:0.2vh">
+                <a style="color: black;">{{orders[docket].total}}</a>
+            </div>
+        </div>
+        <div class="bottom-fade"></div>
+        <div  *ngIf="recieptData.dockets.length == 0">
+            <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   D O C K E T S   S E L E C T E D</p></pre>
         </div>
     </div>
 </div>

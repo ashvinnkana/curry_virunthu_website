@@ -14,6 +14,7 @@ import { GlobalVariableService } from 'src/app/services/global-variable.service'
 export class KitchenDocketComponent {
 
   public orders: any = [];
+  public customerData: any = {};
   public foodSummary: any = {};
   public addonSummary: any = {};
   public drinkSummary: any = {};
@@ -42,6 +43,7 @@ export class KitchenDocketComponent {
   constructor(private orderService: OrderService, private customerService: CustomerService, public globalVariableService: GlobalVariableService) { }
 
   ngOnInit(): void {
+    this.retrieveCustomers();
     this.retrieveOrders();
 
     setInterval(() => {
@@ -57,6 +59,23 @@ export class KitchenDocketComponent {
      } else {
        this.globalVariableService.isAdmin = false
      }
+  }
+
+  retrieveCustomers(): void {
+    this.customerService.getAll()
+      .snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+          )
+        )
+      ).subscribe(data => {
+        this.customerData = {}
+        for (let cus of data){
+          this.customerData[cus["mobile"]] = cus
+        } 
+
+      });
   }
 
   retrieveOrders(): void {

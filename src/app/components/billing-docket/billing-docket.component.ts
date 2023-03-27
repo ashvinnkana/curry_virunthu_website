@@ -17,6 +17,8 @@ export class BillingDocketComponent {
 
   public currentTime: any;
 
+  public customerData: any = {};
+
   public orderTypeColor: any = {
     "Dine-in": "#0B5FA3",
     "Takeaway": "#a30b69"
@@ -28,6 +30,8 @@ export class BillingDocketComponent {
     "PREPARING": "#E9BC69",
     "DONE": "#5AD880"
   }
+
+  public selectedDockets:any = []
 
   public updateDocketList: any = []
 
@@ -42,7 +46,34 @@ export class BillingDocketComponent {
      }
   }
 
+  summaryWidth = 30
+  showSummary() {
+    if (this.summaryWidth == 5) {
+      this.summaryWidth = 30
+    } else {
+      this.summaryWidth = 5
+    }
+  }
+
+  retrieveCustomers(): void {
+    this.customerService.getAll()
+      .snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+          )
+        )
+      ).subscribe(data => {
+        this.customerData = {}
+        for (let cus of data){
+          this.customerData[cus["mobile"]] = cus
+        } 
+
+      });
+  }
+
   ngOnInit(): void {
+    this.retrieveCustomers();
     this.retrieveOrders();
 
     setInterval(() => {
@@ -201,6 +232,30 @@ export class BillingDocketComponent {
     if (confirm("PAID ?")) {
       this.orders[orderIndex]["state"] = 'PAID'
       this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
+    }
+  }
+
+
+  recieptData:any = {
+    dockets: [],
+    total:0,
+  }
+  selectDocket(orderIndex: any) {
+    this.recieptData = {
+      dockets: [],
+      total:0,
+    }
+    if(!this.selectedDockets.includes(orderIndex)) {
+      this.selectedDockets.push(orderIndex)
+    } else {
+      let index = this.selectedDockets.indexOf(orderIndex);
+      let elementsToRemove = 1;
+      this.selectedDockets.splice(index, elementsToRemove);
+    }
+
+    for (let docketIndex of this.selectedDockets) {
+      this.recieptData.total += this.orders[docketIndex]["total"]
+      this.recieptData.dockets.push(docketIndex)
     }
   }
 }
