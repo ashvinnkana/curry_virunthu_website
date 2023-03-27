@@ -8,10 +8,9 @@
     <div *ngIf="globalVariableService.isAdmin" class="margin">
         <!--Side fade box-->
         <div class="side-fade-box"></div>
-        <!--Bottom fade box
-        <div class="bottom-fade-box"></div>-->
+       
         <div *ngIf="orders.length == 0"
-    style="letter-spacing: 0.3vw; font-weight: bold; color: dodgerblue; padding: 1vw 1vh; font-size: 1.2vw;">
+    style="letter-spacing: 0.3vw; font-weight: bold; color: dodgerblue; padding: 1vw 1vh; font-size: 1.2vw;margin-left: 3vw;">
         NO PENDING DOCKETS</div>
 
 
@@ -185,8 +184,9 @@
 
         <div style="color: white;"
             *ngIf="foodSummary == null && drinkSummary == null && addonSummary == null">
-                <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   P E N D I N G   D O C K E T S</p></pre>
+                <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;margin-left: 2vw;">N O   P E N D I N G   D O C K E T S</p></pre>
         </div>
+        <div class="bottom-fade"></div>
     </div>
-    <div class="bottom-fade"></div>
+    
 </div>

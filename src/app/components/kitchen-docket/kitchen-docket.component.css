@@ -36,7 +36,7 @@
 .bottom-fade-box {
     position: fixed;
     bottom: 0;
-    left: 0;
+    right: 0;
     height: 15vh;
     width: 100vw;
     background-image: linear-gradient(to bottom, 

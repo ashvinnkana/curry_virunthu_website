@@ -12,7 +12,7 @@
         <div class="bottom-fade-box"></div>-->
 
         <div *ngIf="orders.length == 0"
-    style="letter-spacing: 0.3vw; font-weight: bold; color: dodgerblue; padding: 1vw 1vh; font-size: 1.2vw;">
+    style="letter-spacing: 0.3vw; font-weight: bold; color: dodgerblue; padding: 1vw 1vh; font-size: 1.2vw;margin-left: 3vw;">
         NO PENDING BILLING</div>
 
         <div *ngFor="let order of orders; index as j;">
@@ -117,14 +117,20 @@
         </div>
         <br>
         <div style="overflow-y: auto; height: 80vh;"  *ngIf="recieptData.dockets.length != 0">
-            <div *ngFor="let docket of recieptData.dockets"
-            style="background-color: white; height: 5vh;margin-bottom:0.2vh">
-                <a style="color: black;">{{orders[docket].total}}</a>
-            </div>
+
+            <div class="item" style="width: 24vw;" *ngFor="let docket of recieptData.dockets">
+                    <a style="color: black; font-size: 1vw;">{{docket.label}}</a><br>
+
+                    <div class="item-quantity">
+                        <a style="font-family: 'calibri'; font-size: 1vw;">
+                            <a style="color: red;">${{docket.unitPrice}}</a> x {{docket.quantity}}</a>
+
+                    </div>
+                </div>
         </div>
         <div class="bottom-fade"></div>
         <div  *ngIf="recieptData.dockets.length == 0">
-            <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;">N O   D O C K E T S   S E L E C T E D</p></pre>
+            <pre><p style="color:goldenrod; margin-left: 1vw; font-size: 1vw;margin-left: 2vw;">N O   D O C K E T S   S E L E C T E D</p></pre>
         </div>
     </div>
 </div>

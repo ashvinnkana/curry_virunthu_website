@@ -31,7 +31,7 @@ export class BillingDocketComponent {
     "DONE": "#5AD880"
   }
 
-  public selectedDockets:any = []
+  public selectedDockets: any = []
 
   public updateDocketList: any = []
 
@@ -39,11 +39,11 @@ export class BillingDocketComponent {
 
   loginAdmin(): void {
     var password = prompt("Enter Administration Password: ")
-     if (password == '@shvinn') {
-       this.globalVariableService.isAdmin = true
-     } else {
-       this.globalVariableService.isAdmin = false
-     }
+    if (password == '@shvinn') {
+      this.globalVariableService.isAdmin = true
+    } else {
+      this.globalVariableService.isAdmin = false
+    }
   }
 
   summaryWidth = 30
@@ -65,9 +65,9 @@ export class BillingDocketComponent {
         )
       ).subscribe(data => {
         this.customerData = {}
-        for (let cus of data){
+        for (let cus of data) {
           this.customerData[cus["mobile"]] = cus
-        } 
+        }
 
       });
   }
@@ -135,8 +135,8 @@ export class BillingDocketComponent {
     }
 
     this.updateDocketList.push({
-      "id" : this.orders[orderIndex]["id"],
-      "data" : this.orders[orderIndex]
+      "id": this.orders[orderIndex]["id"],
+      "data": this.orders[orderIndex]
     })
   }
 
@@ -164,8 +164,8 @@ export class BillingDocketComponent {
     }
 
     this.updateDocketList.push({
-      "id" : this.orders[orderIndex]["id"],
-      "data" : this.orders[orderIndex]
+      "id": this.orders[orderIndex]["id"],
+      "data": this.orders[orderIndex]
     })
   }
 
@@ -183,8 +183,8 @@ export class BillingDocketComponent {
     }
 
     this.updateDocketList.push({
-      "id" : this.orders[orderIndex]["id"],
-      "data" : this.orders[orderIndex]
+      "id": this.orders[orderIndex]["id"],
+      "data": this.orders[orderIndex]
     })
   }
 
@@ -219,13 +219,13 @@ export class BillingDocketComponent {
     return Math.round(value)
   }
 
-  updateOrder(id:any, data:any) {
+  updateOrder(id: any, data: any) {
     this.orderService.update(id, data).then(() => {
 
     })
-    .catch((error) => {
-      console.error("Cannot update order docket: ", error);
-  });
+      .catch((error) => {
+        console.error("Cannot update order docket: ", error);
+      });
   }
 
   confirmPayment(orderIndex: any) {
@@ -236,16 +236,16 @@ export class BillingDocketComponent {
   }
 
 
-  recieptData:any = {
+  recieptData: any = {
     dockets: [],
-    total:0,
+    total: 0,
   }
   selectDocket(orderIndex: any) {
     this.recieptData = {
       dockets: [],
-      total:0,
+      total: 0,
     }
-    if(!this.selectedDockets.includes(orderIndex)) {
+    if (!this.selectedDockets.includes(orderIndex)) {
       this.selectedDockets.push(orderIndex)
     } else {
       let index = this.selectedDockets.indexOf(orderIndex);
@@ -253,9 +253,44 @@ export class BillingDocketComponent {
       this.selectedDockets.splice(index, elementsToRemove);
     }
 
+
+    var items: any = {}
     for (let docketIndex of this.selectedDockets) {
       this.recieptData.total += this.orders[docketIndex]["total"]
-      this.recieptData.dockets.push(docketIndex)
+      for (let item of this.orders[docketIndex]["foodOrder"]) {
+        if (item["state"] != 'REMOVED') {
+          if (items[item["label"]]) {
+            items[item["label"]]["quantity"] += item["quantity"]
+          } else {
+            items[item["label"]] = {
+              "label": item["label"],
+              "itemId": item["itemId"],
+              "quantity": item["quantity"],
+              "unitPrice": item["unitPrice"]
+            }
+          }
+        }
+      }
+      for (let item of this.orders[docketIndex]["drinkOrder"]) {
+        if (item["state"] != 'REMOVED') {
+          if (items[item["label"]]) {
+            items[item["label"]]["quantity"] += item["quantity"]
+          } else {
+            items[item["label"]] = {
+              "label": item["label"],
+              "itemId": item["itemId"],
+              "quantity": item["quantity"],
+              "unitPrice": item["unitPrice"]
+            }
+          }
+        }
+      }
     }
+
+    this.recieptData.dockets = []
+    for (let key of Object.keys(items)) {
+      this.recieptData.dockets.push(items[key])
+    }
+    console.log(this.recieptData.dockets)
   }
 }

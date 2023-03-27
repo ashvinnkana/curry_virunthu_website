@@ -54,11 +54,11 @@ export class KitchenDocketComponent {
 
   loginAdmin(): void {
     var password = prompt("Enter Administration Password: ")
-     if (password == '@shvinn') {
-       this.globalVariableService.isAdmin = true
-     } else {
-       this.globalVariableService.isAdmin = false
-     }
+    if (password == '@shvinn') {
+      this.globalVariableService.isAdmin = true
+    } else {
+      this.globalVariableService.isAdmin = false
+    }
   }
 
   retrieveCustomers(): void {
@@ -71,9 +71,9 @@ export class KitchenDocketComponent {
         )
       ).subscribe(data => {
         this.customerData = {}
-        for (let cus of data){
+        for (let cus of data) {
           this.customerData[cus["mobile"]] = cus
-        } 
+        }
 
       });
   }
@@ -94,49 +94,49 @@ export class KitchenDocketComponent {
 
         this.foodList = []
         this.addonList = []
-        this.drinkList =[]
+        this.drinkList = []
         for (let order of data) {
           if (order["state"] == "ORDERED" || order["state"] == "PREPARING") {
             this.orders.push(order)
             for (let food of order["foodOrder"]) {
-                if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
-                  
-                  if (!this.foodSummary[food["label"]]) {
-                    this.foodList.push(food["label"])
-                    this.foodSummary[food["label"]] = {
-                      "Dine-in":0,
-                      "Takeaway":0
-                    }
-                  }
-                  this.foodSummary[food["label"]][order['orderType']] += food["quantity"] - food["completedCount"]
-                  
+              if (food["state"] == "ORDERED" || food["state"] == "PREPARING") {
 
-                  if (food["addon"]) {
-                    
-                    if (!this.addonSummary[food["addon"]]) {
-                      this.addonList.push(food["addon"])
-                      this.addonSummary[food["addon"]] = {
-                        "Dine-in":0,
-                        "Takeaway":0
-                      }
-                    }
-                    this.addonSummary[food["addon"]][order["orderType"]] += food["quantity"] - food["completedCount"]
+                if (!this.foodSummary[food["label"]]) {
+                  this.foodList.push(food["label"])
+                  this.foodSummary[food["label"]] = {
+                    "Dine-in": 0,
+                    "Takeaway": 0
                   }
                 }
+                this.foodSummary[food["label"]][order['orderType']] += food["quantity"] - food["completedCount"]
+
+
+                if (food["addon"]) {
+
+                  if (!this.addonSummary[food["addon"]]) {
+                    this.addonList.push(food["addon"])
+                    this.addonSummary[food["addon"]] = {
+                      "Dine-in": 0,
+                      "Takeaway": 0
+                    }
+                  }
+                  this.addonSummary[food["addon"]][order["orderType"]] += food["quantity"] - food["completedCount"]
+                }
+              }
             }
 
             for (let drink of order["drinkOrder"]) {
-                if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
-                  
-                  if (!this.drinkSummary[drink["label"]]) {
-                    this.drinkList.push(drink["label"])
-                    this.drinkSummary[drink["label"]] = {
-                      "Dine-in":0,
-                      "Takeaway":0
-                    }
+              if (drink["state"] == "ORDERED" || drink["state"] == "PREPARING") {
+
+                if (!this.drinkSummary[drink["label"]]) {
+                  this.drinkList.push(drink["label"])
+                  this.drinkSummary[drink["label"]] = {
+                    "Dine-in": 0,
+                    "Takeaway": 0
                   }
-                  this.drinkSummary[drink["label"]][order["orderType"]] += drink["quantity"] - drink["completedCount"]
                 }
+                this.drinkSummary[drink["label"]][order["orderType"]] += drink["quantity"] - drink["completedCount"]
+              }
             }
           }
         }
@@ -154,7 +154,7 @@ export class KitchenDocketComponent {
       });
   }
 
-  summaryWidth = 5
+  summaryWidth = 30
   showSummary() {
     if (this.summaryWidth == 5) {
       this.summaryWidth = 30
@@ -235,7 +235,12 @@ export class KitchenDocketComponent {
   }
 
   sendToBiling(orderIndex: any) {
-    this.orders[orderIndex]["state"] = 'BILLING'
+    if (this.orders[orderIndex]["orderType"] == 'Takeaway') {
+      this.orders[orderIndex]["state"] = 'PAID'
+    }
+    else {
+      this.orders[orderIndex]["state"] = 'BILLING'
+    }
     this.updateOrder(this.orders[orderIndex]["id"], this.orders[orderIndex]);
   }
 
